@@ -124,8 +124,10 @@
 				$query_message .= "ORDER BY {$order} desc ";
 			}
 
-			$query_message .= "LIMIT {$offset}, {$limit}";
-
+			if(!$offset){
+				$query_message .= "LIMIT {$offset}, {$limit}";
+			}
+			
 			$query_message .= ';';
 
 			if(!$result = $link->query($query_message)){
