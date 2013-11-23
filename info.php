@@ -1,0 +1,3 @@
+<?php
+asd	echo phpinfo();
+?>
