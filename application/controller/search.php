@@ -53,7 +53,6 @@ class Search extends Kiel_Controller
 		$json = json_encode($xml);
 		$array = json_decode($json,TRUE);
 		
-		var_dump($array);
 		
 		foreach($array['person'] as $p){
 			$mess = "";
@@ -62,7 +61,6 @@ class Search extends Kiel_Controller
 					$mess = $g['status'] ."\n" .$g['text'];
 			}
 
-			var_dump($p);
 
 			array_push($google, array(
 				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
