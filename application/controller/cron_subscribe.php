@@ -22,6 +22,9 @@ class Cron_subscribe extends Kiel_Controller
 		//execute post
 		$result = curl_exec($ch);
 
+		print_r($result);
+		die();
+
 		//close connection
 		curl_close($ch);
 		
