@@ -1,5 +1,5 @@
 <?php
-class Voice extends Kiel_Controller
+class Voice_call extends Kiel_Controller
 {
 
 	public function call_in_post()
@@ -16,6 +16,17 @@ class Voice extends Kiel_Controller
 		  // do anything if we catch this.
 		}
 
+		$caller = $session->getFrom();
+
+		$tropo = new Tropo();
+		// $caller now has a hash containing the keys: id, name, channel, and network
+		$tropo->say("Your phone number is " . $caller['id']);
+		$tropo->renderJSON();
+
+	}
+	public function test_get()
+	{
+		
 	}
 
 }
