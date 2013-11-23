@@ -22,9 +22,6 @@ class Cron_subscribe extends Kiel_Controller
 		//execute post
 		$result = curl_exec($ch);
 
-		print_r($result);
-		die();
-
 		//close connection
 		curl_close($ch);
 		
@@ -198,10 +195,9 @@ class Cron_subscribe extends Kiel_Controller
 		$data = $array['data']['result'];
 		foreach($data as $p){
 			$matches = array();
-			print_r($p);
-			die();
+
 			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['sender_number'], $matches);
-			if(preg_match(str_ireplace(" ","|",strtolower('/('.urldecode( $p['place_tag']).urldecode($p['sender']). urldecode($p['message']) .')/')), $bogart['searchString'] && $matches[0]))
+			if($matches[0])
 				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
 
 		}}
