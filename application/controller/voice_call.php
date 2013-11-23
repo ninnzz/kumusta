@@ -32,7 +32,7 @@ class Voice_call extends Kiel_Controller
     		)
   		));
 
-		$tropo->on(array("event" => "continue", "next" => "/voice_call/match_ref"));
+		$tropo->on(array("event" => "continue",'say'=> 'Fantastic! I love that, too!'));
 		
 
 		$tropo->renderJSON();
