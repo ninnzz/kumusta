@@ -26,6 +26,8 @@ if($message) {
 		$user = $link->query('SELECT * FROM users WHERE phoneNumber LIKE \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1');
 		$user = is_array($user) ? $user[0] : NULL;
 
+		echo "the user: "; print_r($user);
+
 		if($user) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
