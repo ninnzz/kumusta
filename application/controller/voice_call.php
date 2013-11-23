@@ -52,7 +52,7 @@ class Voice_call extends Kiel_Controller
 		array_push($whisper, $say);
 		$on = array("event" => "connect", "whisper" => $whisper); 
 
-		$tropo->transfer('+639152829238',array('from'=>"9875",'on'=>$on));
+//		$tropo->transfer('+639152829238',array('from'=>"9875",'on'=>$on));
 		$tropo->RenderJson();
 	}
 
