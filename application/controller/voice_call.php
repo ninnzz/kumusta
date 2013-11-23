@@ -41,7 +41,8 @@ class Voice_call extends Kiel_Controller
 		// $tropo->say('<speak>Conference ID <say-as interpret-as=\'vxml:digits\'>' . $conference . '</say-as> accepted.</speak>');
 		$tropo->say('Redirecting your call');
 
-		$tropo->transfer(array("9152829238","sip:21581001@sip.tropo.net"),array('terminator'=>'*'));
+		$tropo->transfer(array("+639152829238","sip:21581001@sip.tropo.net"),array('terminator'=>'*',"playvalue" => "http://www.phono.com/audio/holdmusic.mp3",
+));
 		$tropo->RenderJson();
 	}
 
