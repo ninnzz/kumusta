@@ -1,3 +1,3 @@
 <?php
-asd	echo phpinfo();
+	echo phpinfo();
 ?>
