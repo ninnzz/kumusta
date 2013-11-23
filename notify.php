@@ -37,6 +37,14 @@ if($message) {
 					'You will be receiving the list containing '.$name
 				);
 
+				$query = 'INSERT INTO search VALUES(%s);';
+				$data = array('NULL', '\''.$user[0].'\'', '\''.$name.'\'', '\''.date('Y-m-d H:i:s').'\'','NULL');
+
+				$query = sprintf($query, implode(',', $data));
+				$response = $link->query($query);
+
+				echo $query;
+				print_r($response);
 				//logic for pull here
 			}
 
