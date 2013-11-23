@@ -36,7 +36,6 @@ if($message) {
 					$user['1'],
 					'You will be receiving the list containing '.$name
 				);
-
 				//logic for pull here
 			}
 
@@ -49,7 +48,11 @@ if($message) {
 					$user['1'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
+				$query = 'INSERT INTO search VALUES(%s);';
+				$data = array('NULL', '\''.$user[0].'\'', '\''.$name.'\'', '\''.date('Y-m-d H:i:s').'\'','NULL');
 
+				$query = sprintf($query, implode(',', $data));
+				$response = $link->query($query);
 				//logic for adding to cron job here
 			}
 
@@ -62,6 +65,11 @@ if($message) {
 					$user['1'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
+
+				$query = 'DELETE FROM search WHERE %s;';
+				$query = sprintf($query, 'userId = '.$user[0].' AND searchString = \''.$name.'\'');
+				$response = $link->query($query);
+				
 			}
 		}
 	}

@@ -64,6 +64,16 @@
 			#middle h3, #middle span{
 				color: #333;
 			}
+			#bottom{
+				background: #5fe697; /* Old browsers */
+				background: -moz-radial-gradient(center, ellipse cover,  #5fe697 0%, #5fe697 41%, #2ecc71 100%); /* FF3.6+ */
+				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#5fe697), color-stop(41%,#5fe697), color-stop(100%,#2ecc71)); /* Chrome,Safari4+ */
+				background: -webkit-radial-gradient(center, ellipse cover,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-radial-gradient(center, ellipse cover,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* Opera 12+ */
+				background: -ms-radial-gradient(center, ellipse cover,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* IE10+ */
+				background: radial-gradient(ellipse at center,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fe697', endColorstr='#2ecc71',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			}
 			h1,h3,h6{
 				margin: 0;
 			}
@@ -92,7 +102,7 @@
 				text-align: center;
 			}
 			button{
-				margin: 5px 0 40px;
+				margin-top: 5px;
 				font-family: "OpenSansBold";
 				border: 0;
 				background: #2ECC71;
@@ -120,6 +130,9 @@
 				img{
 					width: 100%;
 					height: auto;
+				}
+				#lifeline{
+					margin-top: -50px;
 				}
 			}
 		</style>
@@ -157,12 +170,17 @@ gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, Relief
 		
 		<section id="middle">
 			<h3>MANGAMUSTA</h3>
-			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka
-pindutin ang “Kamustahin”.</span>
+			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka pindutin ang “Kamustahin”.</span>
 			<br />
 			<input type="text" placeholder="Ilagay dito ang buong pangalan ng iyong minamahal"/>
 			<br />
 			<button>KAMUSTAHIN</button>
+			<img id="lifeline" alt="lifeline" src="imgs/lifeline.png" width="100%" height="auto"/>
+			<h3>MAKIPAG-USAP</h3>
+			<span>BLAH BLAH BLAH ANG GWAPO GWAPO NI RAVEN LAGRIMAS. http://facebook.com/ven.lagrimas</span>
+			<br /><br />
+			<img alt="hearts" src="imgs/hearts.png" width="60%" height="auto"/>
+			<br /><br />
 		</section>
 		
 		<section id="bottom">
