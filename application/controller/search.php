@@ -280,4 +280,3 @@ class Search extends Kiel_Controller
 
 	}
 }
-
