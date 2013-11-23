@@ -124,17 +124,17 @@
 				$query_message .= "ORDER BY {$order} desc ";
 			}
 
-			if(!$offset){
+			if($offset != NULL){
 				$query_message .= "LIMIT {$offset}, {$limit}";
 			}
-			
+
 			$query_message .= ';';
 
 			if(!$result = $link->query($query_message)){
 				$err = $link->error;
 				$link->close();
  				header("HTTP/1.0 500 Internal Server Error");
-    			throw new Exception("Database Connection Error [" . $err . "]", 1);
+    			throw new Exception("Database Connection Error [" . $err . "] query=>({$query_message})", 1);
 			}
 
 			while($row = $result->fetch_assoc()){
