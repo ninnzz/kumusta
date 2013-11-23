@@ -23,8 +23,10 @@ if($message) {
 		}
 
 		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
-		$user = $link->query('SELECT * FROM user WHERE phoneNumber LIKE \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1');
+		$user = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1');
 		$user = is_array($user) ? $user[0] : NULL;
+
+		echo "the user: "; print_r($user);
 
 		if($user) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
@@ -33,7 +35,7 @@ if($message) {
 				//if searching
 				$sms->sendMessage(
 					$user['access_token'],
-					$user['subscriber_number'],
+					$user['phoneNumber'],
 					'You will be receiving the list containing '.$name
 				);
 
@@ -46,7 +48,7 @@ if($message) {
 				//if subscribing to search
 				$sms->sendMessage(
 					$user['access_token'],
-					$user['subscriber_number'],
+					$user['phoneNumber'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
 
@@ -59,7 +61,7 @@ if($message) {
 				//if ending subscription
 				$sms->sendMessage(
 					$user['access_token'],
-					$user['subscriber_number'],
+					$user['phoneNumber'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
 			}
