@@ -68,7 +68,7 @@ class Cron_subscribe extends Kiel_Controller
 				}
 				if(preg_match
 					(
-					strtolower('/('.preg_replace('[ \t\n]','|',urldecode($searchString)).')/'),
+					strtolower('/('.preg_replace('[ \t\n]','|',urldecode($bogart['searchString'])).')/'),
 					strtolower($name.' '.$p['name'])
 					)
 					
@@ -88,7 +88,7 @@ class Cron_subscribe extends Kiel_Controller
 
 
 		}
-		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($searchString);
+		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($bogart['searchString']);
 		$response = file_get_contents($url);
 		if($response){
 		$data = preg_replace("/pfif\:/", "", $response);
@@ -125,14 +125,14 @@ class Cron_subscribe extends Kiel_Controller
 		$ret['google'] = $google;
 
 		$tmp = array();
-		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.urlencode($searchString);
+		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.urlencode($bogart['searchString']);
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
 		$data = $array['feed']['entry'];
 		foreach($data as $p){
 
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname']['$t'])). ')/'), strtolower($searchString)))
+			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname']['$t'])). ')/'), strtolower($bogart['searchString'])))
 			if(!isset($tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']])){
 				array_push($dswd, array(
 					'place' => '',
@@ -144,7 +144,7 @@ class Cron_subscribe extends Kiel_Controller
 				$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
 			}
 
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_2']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_2']['$t'])). ')/'), strtolower($searchString)))
+			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_2']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_2']['$t'])). ')/'), strtolower($bogart['searchString'])))
 			if(!isset($tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -156,7 +156,7 @@ class Cron_subscribe extends Kiel_Controller
 			$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
 			}
 
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_3']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_3']['$t'])). ')/'), strtolower($searchString)))
+			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_3']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_3']['$t'])). ')/'), strtolower($bogart['searchString'])))
 			if(!isset($tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -165,10 +165,10 @@ class Cron_subscribe extends Kiel_Controller
 				'message' => 'Survivor',
 				'from' => $p['id']['$t'],
 			));
-			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true;
+			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true; 
 			}
 
-			if(	preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_4']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_4']['$t'])). ')/'), strtolower($searchString)))
+			if(	preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_4']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_4']['$t'])). ')/'), strtolower($bogart['searchString'])))
 			if(!isset($tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -186,7 +186,7 @@ class Cron_subscribe extends Kiel_Controller
 
 		$ret['dswd'] = $dswd;
 
-		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.urldecode($searchString).'&offset=0&limit=1000000000';
+		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.urldecode($bogart['searchString']).'&offset=0&limit=1000000000';
 		$response = file_get_contents($url);
 		if($response){
 		$json = stripslashes($response);
@@ -219,8 +219,8 @@ class Cron_subscribe extends Kiel_Controller
 		$array = json_decode($response, TRUE);
 		$data = $array['data']['posts'];
 		foreach($data as $p){
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($searchString))))
-			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
+			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($bogart['searchString']))))
+			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($bogart['searchString']))) {
 			$matches = array();
 			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['phone'], $matches);
 			if(preg_match('/('.str_ireplace(" ","|",strtolower($p['location'].' '.$p['name'].' '.$p['message'])). ')/', $bogart['searchString']) && $matches[0])
