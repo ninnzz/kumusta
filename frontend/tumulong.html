@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Cache-control" content="public">
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+		<title>Kamusta Ka Na?</title>
+		<style type="text/css">
+			@font-face {
+				font-family: "OpenSans";
+				src: url("fonts/OpenSans-Regular.woff");
+			}
+			@font-face {
+				font-family: "OpenSansLight";
+				src: url("fonts/OpenSans-CondLight.woff");
+			}
+			@font-face {
+				font-family: "OpenSansBold";
+				src: url("fonts/OpenSans-Bold.woff");
+			}
+			*{
+				font-family: "OpenSans";
+				color: #FFF;
+			}
+			html,body{
+				margin: 0;
+				padding: 0;
+				width: 100%;
+			}
+			.clearfix{
+				clear: both;
+			}
+			section{
+				width: 100%;
+				padding: 20px 0;
+				text-align: center;
+			}
+			#top{
+				background-image: url(imgs/bg.png);
+				background-attachment: fixed;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center;
+				padding: 0;
+			}
+			#middle{
+				background-color: #E9EEF2;
+			}
+			#middle ul{
+				text-align: left;
+				list-style-type: none;
+				padding: 10px;
+			}
+			#middle ul li{
+				padding: 15px 0;
+				text-align: left;
+			}
+			#middle h3, #middle li{
+				color: #333;
+			}
+			#bottom{
+				background: #5fe697; /* Old browsers */
+				background: -moz-radial-gradient(center, ellipse cover,  #5fe697 0%, #5fe697 41%, #2ecc71 100%); /* FF3.6+ */
+				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#5fe697), color-stop(41%,#5fe697), color-stop(100%,#2ecc71)); /* Chrome,Safari4+ */
+				background: -webkit-radial-gradient(center, ellipse cover,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-radial-gradient(center, ellipse cover,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* Opera 12+ */
+				background: -ms-radial-gradient(center, ellipse cover,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* IE10+ */
+				background: radial-gradient(ellipse at center,  #5fe697 0%,#5fe697 41%,#2ecc71 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fe697', endColorstr='#2ecc71',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			}
+			h1,h3,h6{
+				margin: 0;
+			}
+			a{
+				text-decoration: none;
+			}
+			h1, h3{
+				font-family: "OpenSansBold";
+			}
+			h1{
+				font-size: 40px;
+				text-align: center;
+			}
+			h3{
+				margin: 20px 0;
+				font-size: 25px;
+			}
+			h6{
+				text-align: center;
+				font-size: 30px;
+				font-family: "OpenSansLight";
+			}
+			input{
+				margin: 20px 0;
+				border: 0;
+				font-size: 15px;
+				width: 400px;
+				padding: 5px 15px;
+				color: #333;
+				text-align: center;
+			}
+			button{
+				margin-top: 5px;
+				font-family: "OpenSansBold";
+				border: 0;
+				background: #2ECC71;
+				font-size: 15px;
+				padding: 5px 50px;
+				cursor: pointer;
+			}
+			#copyright{
+				font-size: 12px;
+			}
+			.white-button{
+				background: #FFF;
+				color: #2ECC71;
+				text-decoration: none;
+				padding: 5px 50px;
+			}
+			@media screen and (max-width: 768px) {
+				#top #container{
+					text-align: center;
+				}
+			}
+			@media screen and (max-width: 480px) {
+				#top #container{
+					width: 100%;
+					padding: 0;
+					text-align: center;
+				}
+				input{
+					width: 80%;
+				}
+				img{
+					width: 100%;
+					height: auto;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<section id="top">
+			<a href="index.html"><h1>KUMUSTA KA NA?<h6>(How are you?)</h6></h1></a>
+		</section>
+		
+		<section id="middle">
+			<h3>MGA NANGUNGULILA</h3>
+			<ul id="list"></ul>
+		</section>
+		
+		<section id="bottom">
+			<h3>MGA KASOSYO</h3>
+			<img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/>
+			<br />
+			<img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/>
+			<br />
+			<img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/>
+			<br />
+			<span id="copyright">Stratovate Devteam. 2013. Tinidorin ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
+		</section>
+		
+		<script type="text/javascript">
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange= function(){
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					var data = JSON.parse(xmlhttp.responseText),
+						list = document.getElementById('list'),
+						i;
+					for(i=0; i<data.length; i+=1){
+						list.innerHTML += "<li>May isang taong nangungulila kay "+data[i].searchString+" <button class=\"have_info\" name="+data[i].id+">MAY BALITA AKO DIYAN</button></li>";
+					}
+				}
+			}
+			xmlhttp.open("GET","data.json",true);
+			xmlhttp.send();
+		</script>
+	</body>
+</html>
