@@ -32,21 +32,33 @@ class Voice_call extends Kiel_Controller
 	public function match_ref_post()
 	{
 		require('tropo_voice/tropo.class.php');
+		$this->load_model('subscriber_model');
 
 
 		$tropo = new Tropo();
 
 		@$result = new Result();   
-		$conference = $result->getValue();	//gets the ref number
-		// $tropo->say('<speak>Conference ID <say-as interpret-as=\'vxml:digits\'>' . $conference . '</say-as> accepted.</speak>');
-		$tropo->say('Redirecting your call');
+		$u_id = $result->getValue();	//gets the ref number
 
-		$tropo->transfer(array("9159558885","sip:21581001@sip.tropo.net"),array('from'=>'12312312','terminator'=>'*',"playvalue" => "http://www.phono.com/audio/holdmusic.mp3"));
+
+		$usr = $this->subscriber_model->subscriber_details($u_id);
+		if($usr){
+			$tropo->say('Redirecting your call');
+
+			$tropo->transfer(array("9159558885","sip:21581001@sip.tropo.net"),array('from'=>'21587625','terminator'=>'*',"playvalue" => "http://www.phono.com/audio/holdmusic.mp3"));
+		} else {
+			$tropo->say('Invalid Reference Code. Ending call now!');
+		}
+
+
 		$tropo->RenderJson();
 	}
 
 	public function test_get()
 	{
+		$this->load_model('subscriber_model');
+		$usr = $this->subscriber_model->subscriber_details('7');
+		print_r($usr);
 		
 	}
 
