@@ -10,7 +10,7 @@ class Voice_call extends Kiel_Controller
 		// $caller now has a hash containing the keys: id, name, channel, and network
 		
 
-		$tropo->ask('Please type the four digit combination then press hash tag', array(
+		$tropo->ask('Please type the four digit combination, then press hash tag', array(
   			"choices"=>'[DIGITS]',
   			"name" => "confid", 
     		"attempts" => 5,
@@ -22,7 +22,7 @@ class Voice_call extends Kiel_Controller
     		)
   		));
 
-		$tropo->on(array("event" => "continue",'say'=> 'Fantastic! I love that, too!'));
+		$tropo->on(array("event" => "continue","next" => "/voice_call/match_ref/"));
 		
 
 		$tropo->renderJSON();
@@ -36,7 +36,7 @@ class Voice_call extends Kiel_Controller
 
 		$tropo = new Tropo();
 
-		$result = new Result();   
+		@$result = new Result();   
 		$conference = $result->getValue();
 		$tropo->say('<speak>Conference ID <say-as interpret-as=\'vxml:digits\'>' . $conference . '</say-as> accepted.</speak>');
 		$tropo->RenderJson();
