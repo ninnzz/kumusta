@@ -10,12 +10,12 @@ class Voice_call extends Kiel_Controller
 		// $caller now has a hash containing the keys: id, name, channel, and network
 		
 
-		$tropo->ask('Please say the four digit combination', array(
+		$tropo->ask('Please type the four digit combination then press hash tag', array(
   			"choices"=>'DIGIT',
   			"name" => "confid", 
     		"attempts" => 5,
     		"timeout" => 60, 
-    		"mode" => "speech",
+    		"mode" => "dtmf",
   			"event"=> array(
     			'timeout' => 'Speak up!',
     		)
