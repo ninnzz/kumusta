@@ -229,7 +229,7 @@ class Search extends Kiel_Controller
 				'from' => $url,
 			));
 			if(isset($id) && isset($matches[0])){
-				call($id, $searchString, $matches[0]);
+			//	call($id, $searchString, $matches[0]);
 			}
 		}}
 		}
@@ -255,7 +255,7 @@ class Search extends Kiel_Controller
 				));
 
 			if(isset($id) && isset($matches[0])){
-				call($id, $searchString, $matches[0]);
+			//	call($id, $searchString, $matches[0]);
 			}
 			}
 		}
