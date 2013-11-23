@@ -8,6 +8,8 @@
 		$response = $_REQUEST;
 	}
 
+	print_r($response);
+
 	if(isset($response['access_token'])) {
 		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
 		$data = array('NULL', $response['subscriber_number'], $response['access_token'], date('Y-m-d H:i:s'), 'NULL');
