@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="Cache-control" content="public">
+		<meta name="viewport" content="width=device-width, user-scalable=no" />
+		<title>Kamusta Ka Na Ba?</title>
+		<style type="text/css">
+			@font-face {
+				font-family: "OpenSans";
+				src: url("fonts/OpenSans-Regular.woff");
+			}
+			@font-face {
+				font-family: "OpenSansLight";
+				src: url("fonts/OpenSans-CondLight.woff");
+			}
+			@font-face {
+				font-family: "OpenSansBold";
+				src: url("fonts/OpenSans-Bold.woff");
+			}
+			*{
+				font-family: "OpenSans";
+				color: #FFF;
+			}
+			html,body{
+				margin: 0;
+				padding: 0;
+				width: 100%;
+			}
+			.clearfix{
+				clear: both;
+			}
+			section{
+				width: 100%;
+				background: #2ECC71;
+				padding: 20px 0;
+				text-align: center;
+			}
+			#top{
+				background-image: url(imgs/bg.png);
+				background-attachment: fixed;
+				background-repeat: no-repeat;
+				background-size: cover;
+				position: relative;
+				padding: 0;
+			}
+			#top #container{
+				text-align: right;
+				float: right;
+				padding-right: 150px;
+				width: 50%;
+				margin-top: 30px;
+			}
+			#overlay{
+				position: absolute;
+				bottom: 0;
+				background-color: rgba(46,204,113,0.16);
+				padding: 30px;
+			}
+			#middle{
+				background-color: #E9EEF2;
+			}
+			#middle h3, #middle span{
+				color: #333;
+			}
+			h1,h3,h6{
+				margin: 0;
+			}
+			h1, h3{
+				font-family: "OpenSansBold";
+			}
+			h1{
+				font-size: 40px;
+				text-align: center;
+			}
+			h3{
+				margin: 20px 0;
+			}
+			h6{
+				text-align: center;
+				font-size: 30px;
+				font-family: "OpenSansLight";
+			}
+			input{
+				margin: 20px 0;
+				border: 0;
+				font-size: 15px;
+				width: 400px;
+				padding: 5px 15px;
+				color: #333;
+				text-align: center;
+			}
+			button{
+				margin: 5px 0 40px;
+				font-family: "OpenSansBold";
+				border: 0;
+				background: #2ECC71;
+				font-size: 15px;
+				padding: 5px 50px;
+				cursor: pointer;
+			}
+			#copyright{
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<section id="top">
+			<div id="container">
+				<h1>KUMUSTA KA NA BA?</h1>
+				<h6>(How are you?)</h6>
+				<p>
+					I-text lang ang<br />
+					“SEARCH <pangalan ng iyong minamahal>”<br />
+					sa 21581001 (GLOBE/TM)<br />
+					para malaman ang mga impormasyong<br />
+					may kaugnay sa iyong minamahal.<br />
+					<br /><br />
+					Pwede ring makatanggap ng live na update<br />
+					na tumutugma sa pangalan ng iyong minamahal<br />
+					sa pamamagitan ng pag-text ng<br />
+					“SUBSCRIBE SEARCH <pangalan ng iyong minamahal>”<br />
+					sa 21581001 (GLOBE/TM)<br />
+					<br /><br />
+					Kung ayaw mo ng makatanggap ng live updates,<br />
+					i-text lang ang “END SUBSCRIBE SEARCH <pangalan ng iyong minamahal”<br />
+					sa 21581001. 
+				</p>
+			</div>
+			<div id="overlay">
+				Ang Kumusta Ka Na Ba ay isang paraan upang kamustahin ang mga mahal mo sa buhay lalo na yung mga nasalanta ng bagyong Yolanda
+gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, ReliefBoard, DSWD at mga mabubuting loob.
+			</div>
+		</section>
+		
+		<section id="middle">
+			<h3>MANGAMUSTA</h3>
+			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka
+pindutin ang “Kamustahin”.</span>
+			<br />
+			<input type="text" placeholder="Ilagay dito ang buong pangalan ng iyong minamahal"/>
+			<br />
+			<button>KAMUSTAHIN</button>
+		</section>
+		
+		<section id="bottom">
+			<h3>MGA KASOSYO</h3>
+			<img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/>
+			<br />
+			<img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/>
+			<img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/>
+			<img src="imgs/oplanhatid.png" width="302px" height="88px" alt="Oplan Hatid"/>
+			<br />
+			<span id="copyright">Stratovate Devteam. 2013. Tinidor-in ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
+		</section>
+		
+		<script type="text/javascript">
+			(function(){
+				var top = document.getElementById('top'),
+					respond = function(){
+						top.style.height = window.innerHeight+"px";
+					};
+				window.onresize = respond;
+				respond();
+			})();
+		</script>
+	</body>
+</html>
