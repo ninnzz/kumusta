@@ -62,6 +62,8 @@ class Cron_subscribe extends Kiel_Controller
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
+		var_dump($array);
+		die();
 		foreach($array['data'] as $p){
 				$name = "";
 				if(isset($p['tags'])) {
