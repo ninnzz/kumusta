@@ -25,8 +25,8 @@ class Voice_call extends Kiel_Controller
 		$tropo->ask('Please say the four digit combination', array(
   			"choices"=>'[ANY]',
   			"name" => "confid", 
-    		"attempts" => 5, 
-    		"timeout" => 60, 
+    		"attempts" => 5,
+    		"mode" => "dtmf", 
   			"event"=> array(
     			'timeout' => 'Speak up!',
     		)
@@ -41,6 +41,9 @@ class Voice_call extends Kiel_Controller
 
 	public function match_ref_post()
 	{
+		require('tropo_voice/tropo.class.php');
+
+		
 		$tropo = new Tropo();
 
 		$result = new Result();   
