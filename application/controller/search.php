@@ -42,6 +42,7 @@ class Search extends Kiel_Controller
 				));
 				}
 		}
+		
 
 		$ret['fb'] = $fb;
 
@@ -176,13 +177,13 @@ class Search extends Kiel_Controller
 		$ret['bangon'] = $bangon;
 
 		if($request == 'mobile'){			// return 3 E
-			$arr = array_slice($ret,0,3);
+			$arr = array_slice(array_merge($fb, $google, $dswd,$relief, $bangon),0,3);
 			$arr['count'] = count($arr);
 
 			// DO MOBILE HERE
 			$this->response(array('status'=>'Success','data'=>$arr),200);
 		} else if($request == 'subscibe'){	//return 5 E
-			$arr = array_slice($ret,0,5);
+			$arr = array_slice(array_merge($fb, $google, $dswd,$relief, $bangon),0,5);
 			$arr['count'] = count($arr);
 
 			// DO MOBILE HERE
