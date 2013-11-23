@@ -4,9 +4,14 @@ class Search extends Kiel_Controller
 	public function index_get(){
 		$required = array('query','source');
 		$this->required_fields($required,$this->get_args);
+<<<<<<< HEAD
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
 		$id = $this->get_args['id'];
+=======
+		$request = urldecode($this->get_args['source']);
+		$searchString = urldecode($this->get_args['query']);
+>>>>>>> c52f76f4d63651966750d849edfe0ec38fec7901
 
 		$ret = array();
 		$count=0;
@@ -47,6 +52,11 @@ class Search extends Kiel_Controller
 					'from' => $p['link'],
 				));
 				}
+			}
+			$p['name'] = preg_replace("/  /", " ", preg_replace("/(\r\n|\r|\n)/", " ", $p['name'])) .' '.$name;
+			if(strpos(strtolower($p['name']), strtolower($searchString)) !== false){
+				$fb[] = $p;
+			}
 		}
 
 		$ret['fb'] = $fb;
@@ -85,7 +95,68 @@ class Search extends Kiel_Controller
 			
 		}
 		}
+		$data['google'] = $google;
 
+
+		
+		$dswd = array();
+		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.urlencode($searchString);
+		$response = @file_get_contents($url);
+		if($response){
+			$array = json_decode($response, true);
+			
+			if(isset($array['feed']['entry'])){
+				$temp = $array['feed']['entry'];
+				foreach($temp as $p){
+
+					if(strpos(strtolower($p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']), strtolower($searchString))!== false)
+					if(!isset($tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']])){
+						array_push($dswd, array(
+							'place' => '',
+							'sender' =>	$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t'],
+							'number' => '',
+							'message' => 'Survivor',
+							'from' => $p['id']['$t'],
+						));
+						$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
+					}
+
+					if(strpos(strtolower($p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']), strtolower($searchString))!== false)
+					if(!isset($tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']])){
+					array_push($dswd, array(
+						'place' => '',
+						'sender' =>	$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t'],
+						'number' => '',
+						'message' => 'Survivor',
+						'from' => $p['id']['$t'],
+					));
+					$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
+					}
+
+					if(strpos(strtolower($p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']), strtolower($searchString))!== false)
+					if(!isset($tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']])){
+					array_push($dswd, array(
+						'place' => '',
+						'sender' =>	$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t'],
+						'number' => '',
+						'message' => 'Survivor',
+						'from' => $p['id']['$t'],
+					));
+					$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true;
+					}
+
+					if(strpos(strtolower($p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']), strtolower($searchString))!== false)
+					if(!isset($tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']])){
+					array_push($dswd, array(
+						'place' => '',
+						'sender' =>	$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t'],
+						'number' => '',
+						'message' => 'Survivor',
+						'from' => $p['id']['$t'],
+					));
+					$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
+					}
+				}
 		
 		$ret['google'] = $google;
 
@@ -143,9 +214,6 @@ class Search extends Kiel_Controller
 				'from' => $p['id']['$t'],
 			));
 			$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
-			}
-		}
-
 		}
 
 
@@ -195,7 +263,6 @@ class Search extends Kiel_Controller
 			}
 			}
 		}
-		}
 	
 		$ret['bangon'] = $bangon;
 
@@ -205,14 +272,14 @@ class Search extends Kiel_Controller
 
 			// DO MOBILE HERE
 			$this->response(array('status'=>'Success','data'=>$arr),200);
-		} else if($request == 'subscibe'){	//return 5 E
-			$arr = array_slice(array_merge($fb, $google, $dswd,$relief, $bangon),0,5);
+		} else if($request == 'subscribe'){	//return 5 E
+			$arr = array_slice($ret,0,5);
 			$arr['count'] = count($arr);
 
 			// DO MOBILE HERE
 			$this->response(array('status'=>'Success','data'=>$arr),200);
 		} else {
-			$this->response(array('status'=>'Success','data'=>$ret),200);
+			$this->response(array('status'=>'Success','data'=>$data),200);
 		}
 
 	}
