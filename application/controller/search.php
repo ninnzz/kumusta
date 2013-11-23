@@ -24,7 +24,7 @@ class Search extends Kiel_Controller
 		$array = json_decode($response, true);
 		foreach($array as $p){
 				$name = "";
-				
+				var_dump($p);
 				if(isset($p['tags'])) {
 					foreach($p['tags']['data'] as $q){
 						$name =$name . $q['name'].' & ';
