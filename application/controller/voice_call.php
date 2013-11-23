@@ -37,8 +37,10 @@ class Voice_call extends Kiel_Controller
 		$tropo = new Tropo();
 
 		@$result = new Result();   
-		$conference = $result->getValue();
-		$tropo->say('<speak>Conference ID <say-as interpret-as=\'vxml:digits\'>' . $conference . '</say-as> accepted.</speak>');
+		$conference = $result->getValue();	//gets the ref number
+		// $tropo->say('<speak>Conference ID <say-as interpret-as=\'vxml:digits\'>' . $conference . '</say-as> accepted.</speak>');
+		$tropo->say('Redirecting your call!');
+		$tropo->call('+639152829238');
 		$tropo->RenderJson();
 	}
 
