@@ -3,6 +3,27 @@ class Cron_subscribe extends Kiel_Controller
 {
 	private function sendTo($id, $number, $entry)
 	{
+		$key = '6qxBuD5aUyrwvscpkFt9';
+		$number = $number;
+		$message = "Magandang Araw! Kung ikaw ay may alam na impormasyong tungkol kay {$entry}, maaraing tumawag sa 21581001 upang makausap mo ang taong naghahanap sa kanya. Ang iyong NUMBER CODE ay : {$id}"
+		$message = urlencode($message).' [This is an auto generated message, DO NOT REPLY! Tumawag sa 21581001 at ilagay ang number code.]';
+		$from = 'KumustaKNB';
+		$url = 'http://api.semaphore.co/api/sms';
+
+		$fields_string = "api={$key}&number={$number}&message={$message}&from={$from}";
+		//open connection
+		$ch = curl_init();
+
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL, $url);
+		curl_setopt($ch,CURLOPT_POST, 4);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+		//execute post
+		$result = curl_exec($ch);
+
+		//close connection
+		curl_close($ch);
 		
 	}
 
