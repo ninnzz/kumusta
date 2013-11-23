@@ -11,7 +11,7 @@ class Voice_call extends Kiel_Controller
 		
 
 		$tropo->ask('Please say the four digit combination', array(
-  			"choices"=>'[ANY]',
+  			"choices"=>'DIGIT',
   			"name" => "confid", 
     		"attempts" => 5,
     		"timeout" => 60, 
