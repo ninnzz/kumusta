@@ -172,6 +172,7 @@ class Search extends Kiel_Controller
 			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($searchString))))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
 				array_push($bangon, array(
+					'id'	=> $p['id'],
 					'place' => $p['location'],
 					'sender' => $p['name'],
 					'number' => $p['phone'],
