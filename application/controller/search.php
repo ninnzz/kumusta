@@ -32,7 +32,7 @@ class Search extends Kiel_Controller
 					}
 				}
 				$p['name'] = preg_replace("/  /", " ", preg_replace("/(\r\n|\r|\n)/", " ", $p['name'])) .' '.$name;
-				if(strpos(strtolower($p['name']), strtolower($searchString)) !== false){
+				if(preg_match(/'('. str_ireplace(' ','|', strtolower(urldecode($searchString) ) ). ')'/   )){
 				array_push($fb, array(
 					'place' => '',
 					'sender' => $p['name'],
@@ -48,7 +48,7 @@ class Search extends Kiel_Controller
 
 
 		}
-		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.$searchString;
+		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($searchString);
 		$response = file_get_contents($url);
 		if($response){
 		$data = preg_replace("/pfif\:/", "", $response);
@@ -76,7 +76,7 @@ class Search extends Kiel_Controller
 		$ret['google'] = $google;
 
 		$tmp = array();
-		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.$searchString;
+		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.urlencode($searchString);
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
