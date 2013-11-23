@@ -75,11 +75,6 @@ class Search extends Kiel_Controller
 				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
 				'from' => "".$p['source_url'],
 			));	
-
-			if(isset($id) && isset($matches[0])){
-				//call($id, $searchString, $matches[0]);
-			}
-			
 		}
 		}
 
@@ -164,9 +159,6 @@ class Search extends Kiel_Controller
 				'message' => urldecode($p['message']),
 				'from' => $url,
 			));
-			if(isset($id) && isset($matches[0])){
-			//	call($id, $searchString, $matches[0]);
-			}
 		}}
 		}
 		$ret['relief'] = $relief;
@@ -188,9 +180,6 @@ class Search extends Kiel_Controller
 					'from' => $url,
 				));
 
-			if(isset($id) && isset($matches[0])){
-			//	call($id, $searchString, $matches[0]);
-			}
 			}
 		}
 		}
