@@ -22,6 +22,7 @@ class Search extends Kiel_Controller
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
+		var_dump($array);
 		foreach($array as $p){
 				$name = "";
 				var_dump($p);
