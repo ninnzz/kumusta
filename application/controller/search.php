@@ -53,6 +53,7 @@ class Search extends Kiel_Controller
 		$json = json_encode($xml);
 		$array = json_decode($json,TRUE);
 		
+		$var_dump($array);
 		
 		foreach($array as $p){
 			$mess = "";
@@ -60,12 +61,15 @@ class Search extends Kiel_Controller
 				foreach($p['note'] as $g)
 					$mess = $g['status'] ."\n" .$g['text'];
 			}
+
+			var_dump($p);
+
 			array_push($google, array(
-				'place' => $p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
-				'sender' => $p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
+				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
+				'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
 				'number' => '',
-				'message' => preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
-				'from' => $p['source_url'],
+				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
+				'from' => "".$p['source_url'],
 			));	
 		}
 		}
