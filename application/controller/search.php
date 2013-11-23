@@ -30,7 +30,7 @@ class Search extends Kiel_Controller
 					}
 				}
 				$p['name'] = preg_replace("/  /", " ", preg_replace("/(\r\n|\r|\n)/", " ", $p['name'])) .' '.$name;
-				if(preg_match('/('. str_ireplace(' ','|', strtolower(urldecode($searchString) ) ). ')/')){
+				if(preg_match('/('. str_ireplace(' ','|', strtolower(urldecode($searchString) ) ). ')/',$p['name'].strstr($p['name'], 'Help'))){
 				array_push($fb, array(
 					'place' => '',
 					'sender' => $p['name'],
