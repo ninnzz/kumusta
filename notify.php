@@ -40,7 +40,7 @@ if($message) {
 					'You will be receiving the list containing '.$name
 				);
 
-				print_r($response);
+				echo 'pre:'; print_r($response);
 				//logic for pull here
 			}
 
