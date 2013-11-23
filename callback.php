@@ -15,6 +15,8 @@
 		$data = array('NULL', $response['subscriber_number'], $response['access_token'], date('Y-m-d H:i:s'), 'NULL');
 		$query = sprintf($insertClause, $table, implode(',', $data));
 
+		print_r($query);
+
 		$response = $link->query($query);
 
 		print_r($response);
