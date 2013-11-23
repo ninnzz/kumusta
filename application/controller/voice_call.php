@@ -20,7 +20,7 @@ class Voice_call extends Kiel_Controller
 
 		$tropo = new Tropo();
 		// $caller now has a hash containing the keys: id, name, channel, and network
-		$tropo->say("Your phone number is " . $caller['id']);
+		$tropo->say("Hello Nicole Tibay. I love you.");
 		$tropo->renderJSON();
 
 	}
