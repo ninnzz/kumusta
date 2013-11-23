@@ -180,6 +180,7 @@
 					<b>“END SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
 					Kung ayaw mo ng makatanggap ng live updates.<br />
 				</p>
+				<button onclick="location.hash = '#desc'">SUBUKAN</button>
 			</div>
 			<br class="clearfix"/>
 		</section>
@@ -217,6 +218,7 @@
 				<a target="_blank" class="white-button" href="tumulong.html">SUBUKANG TUMULONG</a>
 			</div>
 			<br class="clearfix"/><br />
+			<span id="copyright">The background image is copyrighted by <a target="_blank" href="//CNN.com">CNN.com</a></span>
 			<span id="copyright">Stratovate Devteam. 2013. Tinidorin ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
 		</section>
 		
@@ -224,7 +226,7 @@
 			(function(){
 				var top = document.getElementById('top'),
 					respond = function(){
-						top.style.minHeight = (window.innerHeight)+"px";
+						top.style.minHeight = window.innerHeight+"px";
 					};
 				window.onresize = respond;
 				respond();
