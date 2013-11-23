@@ -5,6 +5,7 @@
 		<meta http-equiv="Cache-control" content="public">
 		<meta name="viewport" content="width=device-width, user-scalable=no" />
 		<title>Kamusta Ka Na?</title>
+		<link rel="stylesheet" type="text/css" href="css/nprogress.css" />
 		<style type="text/css">
 			@font-face {
 				font-family: "OpenSans";
@@ -110,13 +111,41 @@
 			#copyright{
 				font-size: 12px;
 			}
-			#partners{
-				width: 49%;
-				float: left;
+			#results{
+				width: 90%;
+				margin: 10px auto;
 			}
-			#links{
-				float: left;
-				width: 49%;
+			.res{
+				width: 100%;
+				margin: 0 auto;
+			}
+			.res a{
+				color: #333;
+			}
+			#results h4{
+				color: #2ECC71;
+				font-family: "OpenSansBold";
+				clear: both;
+				font-size: 15px;
+				text-align: center;
+				background: #FFF;
+				position: relative;
+				width: 40%;
+				padding: 10px;
+				padding-right: 20px;
+			}
+			#results h4::after{
+				content: ' ';
+				height: 30px;
+				width: 30px;
+				background: inherit;
+				position: absolute;
+				right: -30px;
+				top: 5px;
+				pointer-events: none;
+				-webkit-transform: translateX(-50%) rotate(45deg);
+				transform: translateX(-50%) rotate(45deg);
+				z-index: 3;
 			}
 			.white-button{
 				background: #FFF;
@@ -125,10 +154,32 @@
 				padding: 5px 50px;
 				font-family: "OpenSansBold";
 			}
+			.fb{
+				float: left;
+				width: 300px;
+			}
+			.ggl, .bph, .rbrd, .dswd{
+				text-align: left;
+			}
 			@media screen and (max-width: 960px) {
 				img{
 					width: 100%;
 					height: auto;
+				}
+				#results h4{
+					width: 100%;
+					text-align: center;
+					padding: 10px;
+				}
+				.fb{
+					width: 100%;
+					text-align: center;
+				}
+				#results{
+					width: 100%;
+				}
+				#results h4::after{
+					display: none;
 				}
 			}
 			@media screen and (max-width: 768px) {
@@ -136,11 +187,6 @@
 					text-align: center;
 					margin-right: 50px;
 					width: 50%;
-				}
-			}
-			@media screen and (max-width: 480px) {
-				#partners,#links{
-					width: 100%;
 				}
 			}
 			@media screen and (max-width: 480px) {
@@ -180,49 +226,119 @@
 					<b>“END SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
 					Kung ayaw mo ng makatanggap ng live updates.<br />
 				</p>
-				<button onclick="location.hash = '#desc'">SUBUKAN</button>
+				<button onclick="location.hash='#';location.hash='#desc';">SUBUKAN</button>
+				<br />
+				<p>Marami ka bang nababalitaan? Nais mong tumulong sa mga nangangailangan? Tignan ang listahan ng mga taong nangungulila..</p>
+				<br />
+				<button onclick="window.location = 'tumulong.html';">TUMULONG</button>
 			</div>
 			<br class="clearfix"/>
 		</section>
 		<section id="desc">
 			Ang "Kumusta Ka Na?" ay isang paraan upang kamustahin ang mga mahal mo sa buhay lalo na yung mga nasalanta ng bagyong Yolanda<br />
-			gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, ReliefBoard, DSWD at mga mabubuting loob.
+			gamit ang mga impormasyong nakalap mula sa <a target="blank" href="//www.facebook.com/media/set/?set=a.666212400066213.1073741867.310621318958658&type=3">Rappler</a>, <a target="blank" href="//bangonph.com">BangonPH</a>, <a target="blank" href="//google.org/personfinder/">Google Person Finder</a>, <a target="blank" href="//reliefboard.com">ReliefBoard</a>, DSWD at mga mabubuting loob.
 		</section>
 		<section id="middle">
 			<h3>MANGAMUSTA</h3>
 			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka pindutin ang “Kamustahin”.</span>
 			<br />
-			<input type="text" placeholder="Ilagay dito ang buong pangalan ng iyong minamahal"/>
-			<br />
-			<button>KAMUSTAHIN</button>
+			<form action="POST" action="#" onsubmit="displayResult(); return false;">
+				<input required="required" type="text" placeholder="Ilagay dito ang buong pangalan ng iyong minamahal" id="name"/>
+				<br />
+				<button type="submit" id="kamustahin">KAMUSTAHIN</button>
+			<form>
+			<div id="results"></div>
 			<img alt="lifeline" src="imgs/lifeline.png" width="100%" height="auto"/>
 			<h3>MAKIPAG-USAP</h3>
-			<span>BLAH BLAH BLAH ANG GWAPO GWAPO NI RAVEN LAGRIMAS. http://facebook.com/ven.lagrimas</span>
+			<span>Sa oras na malaman naming may</span>
 			<br /><br />
 			<img alt="hearts" src="imgs/hearts.png" width="60%" height="auto"/>
 			<br /><br />
 		</section>
 		
 		<section id="bottom">
-			<div id="partners">
-				<h3>MGA KASOSYO</h3>
-				<a target="_blank" href="//beta.globe.com.ph"><img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/></a>
-				<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/></a>
-				<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/></a>
-				<br />
-			</div>
-			<div id="links">
-				<h3>TUMULONG</h3>
-				<span>Marami ka bang nababalitaan? Nais mong tumulong sa mga nangangailangan? Tignan ang listahan ng mga taong nangungulila..</span>
-				<br /><br />
-				<a target="_blank" class="white-button" href="tumulong.html">SUBUKANG TUMULONG</a>
-			</div>
-			<br class="clearfix"/><br />
+			<h3>MGA KASOSYO</h3>
+			<a target="_blank" href="//beta.globe.com.ph"><img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/></a>
+			<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/></a>
+			<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/></a>
+			<br />
+			<a target="_blank" href="//bangonph.com"><img src="imgs/bangonph.png" width="177" height="50px" alt="BangonPH"/></a>
 			<span id="copyright">The background image is copyrighted by <a target="_blank" href="//CNN.com">CNN.com</a></span>
 			<span id="copyright">Stratovate Devteam. 2013. Tinidorin ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
 		</section>
 		
+		<script type="text/javascript" src="js/nprogress.js"></script>
 		<script type="text/javascript">
+			String.prototype.trim = function(c){
+				var d = c || 80;
+				return this.substring(0,d-3) + (this.length >= d ?'...':'');
+			};
+			function displayResult(){
+				var a = document.getElementById('name').value,
+					button = document.getElementById('kamustahin'),
+					res = document.getElementById('results'),
+					xmlhttp,
+					data,
+					i;
+				if(a && a.length > 2){
+					NProgress.start();
+					button.innerHTML = "KASALUKUYANG KINUKUMUSTA...";
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function(){
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+							res.innerHTML = "";
+							data = JSON.parse(xmlhttp.responseText);
+							data = data.data;
+							button.innerHTML = "KAMUSTAHIN";
+							console.dir(data);
+							
+							data.fb.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA RAPPLER</h4>");
+							for(i=0; i < data.fb.length; i+=1){
+								if(data.fb[i].image){
+									res.innerHTML += "<div class='res fb'><a target='_blank' href='"+data.fb[i].from+"'><img src='"+data.fb[i].image+"' width='300px'/></a></div>";
+								}
+							}
+							res.innerHTML += "<br /><br class='clearfix'/>";
+							
+							data.google.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA GOOGLE</h4>");
+							for(i=0; i < data.google.length; i+=1){
+								if(data.google[i].message && data.google[i].message.length > 5){
+									res.innerHTML += "<div class='res ggl'><a target='_blank' href='"+data.google[i].from+"'>"+data.google[i].message.trim()+"</div>";
+								}
+							}
+							
+							data.dswd.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA DSWD</h4>");
+							for(i=0; i < data.dswd.length; i+=1){
+								if(data.dswd[i].message){
+									res.innerHTML += "<div class='res dswd'><a target='_blank' href='"+data.dswd[i].from+"'>From "+data.dswd[i].sender+" : "+data.dswd[i].message.trim()+" </div>";
+								}
+							}
+							
+							data.bangon.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA BANGONPH</h4>");
+							for(i=0; i < data.bangon.length; i+=1){
+								if(data.bangon[i].message){
+									res.innerHTML += "<div class='res bph'><a target='_blank' href='//www.bangonph.com/posts/"+data.bangon[i].id+"'>From "+data.bangon[i].sender+" : "+data.bangon[i].message.trim()+"</div>";
+								}
+							}
+							
+							data.relief.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA RELIEFBOARD</h4>");
+							for(i=0; i < data.relief.length; i+=1){
+								if(data.relief[i].message){
+									res.innerHTML += "<div class='res rbrd'><a target='_blank' href='//www.reliefboard.com/ph/post.php?id="+data.relief[i].id+"'>From "+unescape(data.relief[i].sender)+" : "+unescape(data.relief[i].message.trim())+"</div>";
+								}
+							}
+							
+							NProgress.done();
+						}
+					};
+					xmlhttp.open("GET","http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/search?source=web&query="+a,true);
+					xmlhttp.send();
+					NProgress.set(0.6);
+				}
+				else{
+					alert("Pakilagay ng mabuti ang pangalan ng iyong minamahal");
+				}
+			}
 			(function(){
 				var top = document.getElementById('top'),
 					respond = function(){

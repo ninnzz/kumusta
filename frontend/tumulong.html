@@ -203,6 +203,8 @@
 			<br />
 			<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/></a>
 			<br />
+			<a target="_blank" href="//bangonph.com"><img src="imgs/bangonph.png" width="177" height="50px" alt="BangonPH"/></a>
+			<br />
 			<span id="copyright">Stratovate Devteam. 2013. Tinidorin ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
 		</section>
 		
@@ -265,17 +267,17 @@
 			}
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.onreadystatechange= function(){
-				if (xmlhttp.readyState==4 && xmlhttp.status==200)
-				{
+				if (xmlhttp.readyState==4 && xmlhttp.status==200){
 					var data = JSON.parse(xmlhttp.responseText),
 						list = document.getElementById('list'),
-						i;
+						i,
+						data = data.data.result;
 					for(i=0; i<data.length; i+=1){
 						list.innerHTML += "<li><a href=\"#\" onclick='report(\""+data[i].searchString+"\")'>"+data[i].searchString+"</a></li>";
 					}
 				}
 			}
-			xmlhttp.open("GET","data.json",true);
+			xmlhttp.open("GET","http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/subscriber",true);
 			xmlhttp.send();
 		</script>
 	</body>
