@@ -1,6 +1,11 @@
 <?php
 class Cron_subscribe extends Kiel_Controller
 {
+	private function sendTo($id, $number, $entry)
+	{
+		
+	}
+
 
 	public function index_get()
 	{
@@ -9,12 +14,12 @@ class Cron_subscribe extends Kiel_Controller
 		if($this->get_args['app_id'] != "90an729m.kumusta.web"){
 			$this->response(array('status'=>'You dont have permission to access this URL'),500);
 		}
-
+		
 		$this->load_model('subscriber_model');
 
 		$res = $this->subscriber_model->all_subscribed();
 
-
+		foreach($res->data->result as $bogart){
 		// put here the function for searching just loop through the result and send message
 		//pag nakakita ka ng number, may tatawagin kang API..
 		$ret = array();
@@ -77,14 +82,21 @@ class Cron_subscribe extends Kiel_Controller
 					$mess = $g['status'] ."\n" .$g['text'];
 			}
 
+			$matches = array();
+			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['description'], $matches);
 
 			array_push($google, array(
 				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
 				'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
-				'number' => '',
+				'number' => "".$matches[0],
 				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
 				'from' => "".$p['source_url'],
-			));	
+			));
+			if($matches[0])
+				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
+
+		
+
 		}
 		}
 
@@ -161,14 +173,20 @@ class Cron_subscribe extends Kiel_Controller
 		if($array['data']['result_count'] > 0){
 		$data = $array['data']['result'];
 		foreach($data as $p){
+			$matches = array();
+			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['sender_number'], $matches);
 			array_push($relief, array(
 				'id' => $p['id'],
 				'place' => urldecode($p['place_tag']),
 				'sender' => urldecode($p['sender']),
-				'number' => $p['sender_number'],
+				'number' => $matches[0],
 				'message' => urldecode($p['message']),
 				'from' => $url,
 			));
+
+			if($matches[0])
+				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
+
 		}}
 		}
 		$ret['relief'] = $relief;
@@ -181,6 +199,8 @@ class Cron_subscribe extends Kiel_Controller
 		foreach($data as $p){
 			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($searchString))))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
+			$matches = array();
+			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['phone'], $matches);
 				array_push($bangon, array(
 					'id'	=> $p['id'],
 					'place' => $p['location'],
@@ -189,6 +209,8 @@ class Cron_subscribe extends Kiel_Controller
 					'message' => $p['message'],
 					'from' => $url,
 				));
+			if($matches[0])
+				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
 
 			}
 		}
@@ -196,7 +218,7 @@ class Cron_subscribe extends Kiel_Controller
 	
 		$ret['bangon'] = $bangon;
 
-
+		}
 
 		$this->response(array('status'=>'Success','data'=>$res),200);
 
