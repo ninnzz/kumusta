@@ -42,10 +42,10 @@ class Voice_call extends Kiel_Controller
 
 
 		$usr = $this->subscriber_model->subscriber_details($u_id);
-		if($usr){
+		if($usr && $usr['result_count'] == '1'){
 			$tropo->say('Redirecting your call');
-
-			$tropo->transfer(array("9159558885","sip:21581001@sip.tropo.net"),array('from'=>'21587625','terminator'=>'*',"playvalue" => "http://www.phono.com/audio/holdmusic.mp3"));
+			$num = $usr['result'][0]['phoneNumber'];
+			$tropo->transfer(array($num,"sip:21581001@sip.tropo.net"),array('from'=>'21587625','terminator'=>'*',"playvalue" => "http://www.phono.com/audio/holdmusic.mp3"));
 		} else {
 			$tropo->say('Invalid Reference Code. Ending call now!');
 		}

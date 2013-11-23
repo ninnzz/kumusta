@@ -9,7 +9,7 @@ class Subscriber_model extends Kiel_Model{
 	public function subscriber_details_by_search($query)
 	{
 		$query = strtolower(trim($query));
-		$get_queries = "select users.* from users, search where users.id = search.userId AND lower(searchString) ='{$query}';"
+		$get_queries = "select users.* from users, search where users.id = search.userId AND lower(searchString) ='{$query}';";
 		return $this->data_handler->query($get_queries);
 	}
 	public function subscriber_details($id)
