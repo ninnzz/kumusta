@@ -2,9 +2,9 @@
 	$insertClause = 'INSERT INTO %s VALUES(%s)';
 	$table = 'users';
 
-	if($_REQUEST['code']) {
+	if(isset($_REQUEST['code'])) {
 		$response = $auth->getAccessToken($_REQUEST['code']);
-	} else if($_REQUEST['access_token']) {
+	} else if(isset($_REQUEST['access_token'])) {
 		$response = $_REQUEST;
 	}
 
