@@ -1,4 +1,5 @@
 <?php
+	include('PHP/src/GlobeApi.php');
 	$insertClause = 'INSERT INTO %s VALUES(%s)';
 	$table = 'users';
 
