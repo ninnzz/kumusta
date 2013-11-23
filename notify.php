@@ -4,6 +4,7 @@ include('PHP/src/GlobeApi.php');
 $globe = new GlobeApi();
 $sms = $globe->sms(7625);
 
+echo "<pre>";
 // $test = array(1,2,3,4,5);
 // print_r(array_splice($test, 1));
 
@@ -30,9 +31,9 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
-				// print_r($user['1']);
-				// print_r($user['2']);
-				// print_r('You will be receiving the list containing '.$name);
+				print_r($user['1']);
+				print_r($user['2']);
+				print_r('You will be receiving the list containing '.$name);
 				//if searching
 				$response = $sms->sendMessage(
 					$user['1'],
