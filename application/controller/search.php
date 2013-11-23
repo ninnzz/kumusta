@@ -59,10 +59,10 @@ class Search extends Kiel_Controller
 		var_dump($array);
 		foreach($array['person'] as $p){
 			$mess = "";
-			if(isset($p['note'])){
+			/*if(isset($p['note'])){
 				foreach($p['note'] as $g)
 					$mess = $g['status'] ."\n" .$g['text'];
-			}
+			}*/
 			array_push($google, array(
 				'place' => $p['home_street']. ' : '. $p['home_state'],
 				'sender' => $p['full_name'] .' ' .$p['alternate_names'],
