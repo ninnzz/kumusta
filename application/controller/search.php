@@ -163,7 +163,7 @@ class Search extends Kiel_Controller
 		$array = json_decode($response, TRUE);
 		$data = $array['data']['posts'];
 		foreach($data as $p){
-			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$['name'].' '.$p['message'] )). ')/', $searchString))
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/', $searchString))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
 				array_push($bangon, array(
 					'place' => $p['location'],
