@@ -33,7 +33,7 @@ if($message) {
 				//if searching
 				$sms->sendMessage(
 					$user['access_token'],
-					$user['subscriber_number'],
+					$user['phoneNumber'],
 					'You will be receiving the list containing '.$name
 				);
 
@@ -46,7 +46,7 @@ if($message) {
 				//if subscribing to search
 				$sms->sendMessage(
 					$user['access_token'],
-					$user['subscriber_number'],
+					$user['phoneNumber'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
 
@@ -59,7 +59,7 @@ if($message) {
 				//if ending subscription
 				$sms->sendMessage(
 					$user['access_token'],
-					$user['subscriber_number'],
+					$user['phoneNumber'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
 			}
