@@ -29,7 +29,13 @@ class Search extends Kiel_Controller
 						$name =$name . $q['name'].' & ';
 					}
 				}
-				if(preg_match(strtolower'/('.preg_replace('[ \t\n]','|',urldecode($searchString)).')/',strtolower($name.' '.$p['name']))){
+				if(preg_match
+					(
+					strtolower('/('.preg_replace('[ \t\n]','|',urldecode($searchString)).')/'),
+					strtolower($name.' '.$p['name'])
+					)
+					
+				){
 				array_push($fb, array(
 					'place' => '',
 					'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
