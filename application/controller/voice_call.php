@@ -15,8 +15,7 @@ class Voice_call extends Kiel_Controller
   			"name" => "confid", 
     		"attempts" => 5,
     		"timeout" => 60, 
-    		"mode" => "dtmf",
-    		"terminator" => "#", 
+    		"mode" => "speech",
   			"event"=> array(
     			'timeout' => 'Speak up!',
     		)
