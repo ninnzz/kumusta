@@ -26,6 +26,9 @@ if($message) {
 		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
 		echo 'SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;';
 		$user = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;');
+
+		print_r($user);
+
 		$user = is_array($user) ? $user[0] : NULL;
 
 		echo "the user: "; print_r($user);
