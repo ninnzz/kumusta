@@ -11,6 +11,8 @@ $json = file_get_contents('php://input');
 $json = stripslashes($json);
 $message = json_decode($json, true);
 
+print_r($message);
+
 //if we received a message
 if($message) {
 	if(!isset($message['inboundSMSMessageList']['inboundSMSMessage'])) {
