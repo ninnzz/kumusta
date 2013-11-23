@@ -36,8 +36,8 @@ if($message) {
 				print_r('You will be receiving the list containing '.$name);
 				//if searching
 				$response = $sms->sendMessage(
-					$user['1'],
 					$user['2'],
+					$user['1'],
 					'You will be receiving the list containing '.$name
 				);
 
@@ -50,8 +50,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 2));
 				//if subscribing to search
 				$sms->sendMessage(
-					$user['1'],
 					$user['2'],
+					$user['1'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
 
@@ -63,8 +63,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 3));
 				//if ending subscription
 				$sms->sendMessage(
-					$user['1'],
 					$user['2'],
+					$user['1'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
 			}
