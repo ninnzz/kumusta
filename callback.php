@@ -13,6 +13,8 @@
 		$data = array('NULL', $response['subscriber_number'], $response['access_token'], 'NULL', 'NULL');
 		$query = sprintf($insertClause, $table, implode(',', $data));
 
-		echo $query;
+		$response = $link->query($query);
+
+		print_r($response);
 	}
 ?>
