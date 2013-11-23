@@ -26,7 +26,9 @@ class Voice_call extends Kiel_Controller
   			"choices"=>'[ANY]',
   			"name" => "confid", 
     		"attempts" => 5,
-    		"mode" => "dtmf", 
+    		"timeout" => 60, 
+    		"mode" => "dtmf",
+    		"terminator" => "#", 
   			"event"=> array(
     			'timeout' => 'Speak up!',
     		)
@@ -43,7 +45,7 @@ class Voice_call extends Kiel_Controller
 	{
 		require('tropo_voice/tropo.class.php');
 
-		
+
 		$tropo = new Tropo();
 
 		$result = new Result();   
