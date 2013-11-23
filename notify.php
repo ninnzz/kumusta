@@ -30,6 +30,9 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
+				print_r($user['1']);
+				print_r($user['2']);
+				print_r('You will be receiving the list containing '.$name);
 				//if searching
 				$sms->sendMessage(
 					$user['1'],
