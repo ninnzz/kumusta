@@ -43,7 +43,8 @@ class Search extends Kiel_Controller
 				}
 		}
 
-		$ret = array('fb' => $fb);
+		$ret['fb'] = $fb;
+
 
 		}
 		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.$searchString;
@@ -71,7 +72,7 @@ class Search extends Kiel_Controller
 		}
 
 		
-		array_merge($ret, array('google' => $google));
+		$ret['google'] = $google;
 
 		$tmp = array();
 		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.$searchString;
@@ -133,7 +134,7 @@ class Search extends Kiel_Controller
 		}
 
 
-		array_merge($ret, array('dswd' => $dswd));
+		$ret['dswd'] = $dswd;
 
 		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.$searchString.'&offset=0&limit=1000000000';
 		$response = file_get_contents($url);
@@ -152,7 +153,8 @@ class Search extends Kiel_Controller
 			));
 		}}
 		}
-		array_merge($ret, array('relief' => $relief));
+		$ret['relief'] = $relief;
+
 			$url = 'http://api.bangonph.com/v1/posts';
 		$response = file_get_contents($url);
 		if($response){
@@ -171,7 +173,7 @@ class Search extends Kiel_Controller
 		}
 		}
 	
-		array_merge($ret, array('bangon' => $bangon));
+		$ret['bangon'] = $bangon;
 
 		if($request == 'mobile'){			// return 3 E
 			$arr = array_slice($ret,0,3);
