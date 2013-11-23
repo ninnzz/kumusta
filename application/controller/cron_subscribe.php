@@ -40,14 +40,8 @@ class Cron_subscribe extends Kiel_Controller
 
 		$res = $this->subscriber_model->all_subscribed();
 
-		print_r($res);
-		print_r("--------------------");
-		print_r($res['data']['result']);
-		print_r("--------------------");
-		print_r($res->data->result);
-		print_r("--------------------");
-		die();
-		foreach($res->data->result as $bogart){
+
+		foreach($res['result'] as $bogart){
 		// put here the function for searching just loop through the result and send message
 		//pag nakakita ka ng number, may tatawagin kang API..
 		$ret = array();
