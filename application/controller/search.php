@@ -25,18 +25,15 @@ class Search extends Kiel_Controller
 		echo "<pre>";
 		foreach($array['data'] as $p){
 				$name = "";
-				var_dump($p);
-				echo "<br>";
 				if(isset($p['tags'])) {
 					foreach($p['tags']['data'] as $q){
 						$name =$name . $q['name'].' & ';
 					}
 				}
-				$p['name'] = preg_replace("/  /", " ", preg_replace("/(\r\n|\r|\n)/", " ", $p['name'])) .' '.$name;
-				if(preg_match('/('. str_ireplace(' ','|', strtolower(urldecode($searchString) ) ). ')/',$p['name'].strstr($p['name'], 'Help'))){
+				if(preg_match('/('.preg_replace('[ \t\n]','|',urldecode($searchString)).')/',$name.' '.$p['name'])){
 				array_push($fb, array(
 					'place' => '',
-					'sender' => $p['name'],
+					'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
 					'number' => '',
 					'message' => strstr($p['name'], 'Help'),
 					'image' => $p['source'],
