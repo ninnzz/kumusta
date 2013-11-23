@@ -21,6 +21,12 @@ class Subscriber_model extends Kiel_Model{
 			return false;
 		}
 	}
+
+	public function all_subscribed()
+	{
+		$q = "select search.*, (select phoneNumber from users where id = userId) as phoneNumber, (select access_token from users where id = userId) as access_token from search;";
+		return $this->data_handler->query($q);
+	}
 }
 
 ?>
