@@ -16,7 +16,7 @@ class Subscriber_model extends Kiel_Model{
 	{
 		if(is_numeric($id)){
 			$id = intval($id);
-			return $this->data_handler->get_where('user',null,array('id'=>$id),null,null,null,'id','');
+			return $this->data_handler->get_where('users',null,array('id'=>$id),null,null,null,'id','');
 		} else {
 			return false;
 		}
