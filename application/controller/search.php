@@ -135,7 +135,7 @@ class Search extends Kiel_Controller
 
 		$ret['dswd'] = $dswd;
 
-		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.$searchString.'&offset=0&limit=1000000000';
+		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.urldecode($searchString).'&offset=0&limit=1000000000';
 		$response = file_get_contents($url);
 		if($response){
 		$json = stripslashes($response);
@@ -160,7 +160,7 @@ class Search extends Kiel_Controller
 		$array = json_decode($response, TRUE);
 		$data = $array['data']['posts'];
 		foreach($data as $p){
-			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/', $searchString))
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/', urldecode($searchString)))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
 				array_push($bangon, array(
 					'place' => $p['location'],
