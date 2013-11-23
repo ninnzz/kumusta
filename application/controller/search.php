@@ -57,9 +57,8 @@ class Search extends Kiel_Controller
 		$json = json_encode($xml);
 		$array = json_decode($json,TRUE);
 		
-		var_dump($array);
 		
-		foreach($array['person'] as $p){
+		foreach($array as $p){
 			$mess = "";
 			if(isset($p['note'])){
 				foreach($p['note'] as $g)
