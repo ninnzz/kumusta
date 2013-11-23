@@ -7,7 +7,6 @@ class Search extends Kiel_Controller
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
 
-
 		$ret = array();
 		$count=0;
 		$tmp = array();
@@ -19,23 +18,21 @@ class Search extends Kiel_Controller
 		$bangon = array();
 
 
-		$url = 'http://graph.facebook.com/666212400066213/photos?fields=name,tag,source,link&limit=1000';
+		$url = 'http://graph.facebook.com/666212400066213/photos?fields=name,tags,source,link&limit=1000';
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
 		foreach($array['data'] as $p){
 				$name = "";
-				
 				if(isset($p['tags'])) {
 					foreach($p['tags']['data'] as $q){
 						$name =$name . $q['name'].' & ';
 					}
 				}
-				$p['name'] = preg_replace("/  /", " ", preg_replace("/(\r\n|\r|\n)/", " ", $p['name'])) .' '.$name;
-				if(preg_match(/'('. str_ireplace(' ','|', strtolower(urldecode($searchString) ) ). ')'/   )){
+				if(preg_match('/('.preg_replace('[ \t\n]','|',urldecode($searchString)).')/',$name.' '.$p['name'])){
 				array_push($fb, array(
 					'place' => '',
-					'sender' => $p['name'],
+					'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
 					'number' => '',
 					'message' => strstr($p['name'], 'Help'),
 					'image' => $p['source'],
@@ -43,7 +40,6 @@ class Search extends Kiel_Controller
 				));
 				}
 		}
-		
 
 		$ret['fb'] = $fb;
 
@@ -57,18 +53,21 @@ class Search extends Kiel_Controller
 		$json = json_encode($xml);
 		$array = json_decode($json,TRUE);
 		
+		
 		foreach($array['person'] as $p){
 			$mess = "";
 			if(isset($p['note'])){
 				foreach($p['note'] as $g)
 					$mess = $g['status'] ."\n" .$g['text'];
 			}
+
+
 			array_push($google, array(
-				'place' => $p['home_street']. ' : '. $p['home_state'],
-				'sender' => $p['full_name'] .' ' .$p['alternate_names'],
+				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
+				'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
 				'number' => '',
-				'message' => preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
-				'from' => $p['source_url'],
+				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
+				'from' => "".$p['source_url'],
 			));	
 		}
 		}
@@ -84,7 +83,7 @@ class Search extends Kiel_Controller
 		$data = $array['feed']['entry'];
 		foreach($data as $p){
 
-			if(strpos(strtolower($p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']), strtolower($searchString))!== false)
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname']['$t'])). ')/', $searchString))
 			if(!isset($tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']])){
 				array_push($dswd, array(
 					'place' => '',
@@ -96,7 +95,7 @@ class Search extends Kiel_Controller
 				$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
 			}
 
-			if(strpos(strtolower($p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']), strtolower($searchString))!== false)
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_2']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_2']['$t'])). ')/', $searchString))
 			if(!isset($tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -108,7 +107,7 @@ class Search extends Kiel_Controller
 			$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
 			}
 
-			if(strpos(strtolower($p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']), strtolower($searchString))!== false)
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_3']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_3']['$t'])). ')/', $searchString))
 			if(!isset($tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -120,7 +119,7 @@ class Search extends Kiel_Controller
 			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true;
 			}
 
-			if(strpos(strtolower($p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']), strtolower($searchString))!== false)
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_4']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_4']['$t'])). ')/', $searchString))
 			if(!isset($tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -138,7 +137,7 @@ class Search extends Kiel_Controller
 
 		$ret['dswd'] = $dswd;
 
-		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.$searchString.'&offset=0&limit=1000000000';
+		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.urldecode($searchString).'&offset=0&limit=1000000000';
 		$response = file_get_contents($url);
 		if($response){
 		$json = stripslashes($response);
@@ -163,6 +162,7 @@ class Search extends Kiel_Controller
 		$array = json_decode($response, TRUE);
 		$data = $array['data']['posts'];
 		foreach($data as $p){
+			if(preg_match('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/', urldecode($searchString)))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
 				array_push($bangon, array(
 					'place' => $p['location'],
