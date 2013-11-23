@@ -69,8 +69,10 @@ if($message) {
 				$query = 'DELETE FROM search WHERE %s;';
 				$query = sprintf($query, 'userId = '.$user[0].' AND searchString = \''.$name.'\'');
 				$response = $link->query($query);
-				
+
 			}
+
+			print_r($response);
 		}
 	}
 }
