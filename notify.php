@@ -4,6 +4,7 @@ include('PHP/src/GlobeApi.php');
 $globe = new GlobeApi();
 $sms = $globe->sms(7625);
 
+echo "<pre>";
 // $test = array(1,2,3,4,5);
 // print_r(array_splice($test, 1));
 
@@ -22,28 +23,25 @@ if($message) {
 			continue;	
 		}
 
-
 		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
-		echo 'SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;';
-		$user = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;');
-
-		print_r($user);
-
-		$user = is_array($user) ? $user[0] : NULL;
-
-		echo "the user: "; print_r($user);
+		$result = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;');
+		$user = $result->fetch_row();
 
 		if($user) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
+				print_r($user['1']);
+				print_r($user['2']);
+				print_r('You will be receiving the list containing '.$name);
 				//if searching
-				$sms->sendMessage(
-					$user['access_token'],
-					$user['phoneNumber'],
+				$response = $sms->sendMessage(
+					$user['1'],
+					$user['2'],
 					'You will be receiving the list containing '.$name
 				);
 
+				echo 'pre:'; print_r($response);
 				//logic for pull here
 			}
 
@@ -52,8 +50,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 2));
 				//if subscribing to search
 				$sms->sendMessage(
-					$user['access_token'],
-					$user['phoneNumber'],
+					$user['1'],
+					$user['2'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
 
@@ -65,8 +63,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 3));
 				//if ending subscription
 				$sms->sendMessage(
-					$user['access_token'],
-					$user['phoneNumber'],
+					$user['1'],
+					$user['2'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
 			}
