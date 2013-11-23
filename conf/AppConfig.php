@@ -82,4 +82,17 @@
 	$config['application_path'] = "/kumusta";
 
 	$config['load_db'] = TRUE;
+
+
+	/*****DATA ENDPOINTS*****/
+	// add q=<query string>
+	$config['person_finder'] = "https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y";
+	// add q=<query string>
+	$config['rappler_facebook'] = "http://graph.facebook.com/666212400066213/photos?fields=name,tags,link&limit=1000";
+	// add q=<query string>
+	$config['dswd_list'] = "http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json";
+	$config['bangon_ph'] = "http://api.bangonph.com/v1/posts";
+	$config['relief_board'] = "reliefboard.com/search?loc=1&name=1&message=1";
+
+
 ?>
