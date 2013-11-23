@@ -56,14 +56,27 @@ class Search extends Kiel_Controller
 		$xml = simplexml_load_string($data);
 		$json = json_encode($xml);
 		$array = json_decode($json,TRUE);
-		
-		foreach($array['person'] as $p){
+		if(count($array) < 1){
 			$mess = "";
-			var_dump($p);
-			/*if(isset($p['note'])){
+			if(isset($p['note'])){
 				foreach($p['note'] as $g)
 					$mess = $g['status'] ."\n" .$g['text'];
-			}*/
+			}
+			array_push($google, array(
+				'place' => $p['home_street']. ' : '. $p['home_state'],
+				'sender' => $p['full_name'] .' ' .$p['alternate_names'],
+				'number' => '',
+				'message' => preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
+				'from' => $p['source_url'],
+			));	
+			
+		}	else	
+		foreach($array['person'] as $p){
+			$mess = "";
+			if(isset($p['note'])){
+				foreach($p['note'] as $g)
+					$mess = $g['status'] ."\n" .$g['text'];
+			}
 			array_push($google, array(
 				'place' => $p['home_street']. ' : '. $p['home_state'],
 				'sender' => $p['full_name'] .' ' .$p['alternate_names'],
