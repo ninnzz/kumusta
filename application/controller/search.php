@@ -55,7 +55,7 @@ class Search extends Kiel_Controller
 		
 		var_dump($array);
 		
-		foreach($array as $p){
+		foreach($array['person'] as $p){
 			$mess = "";
 			if(isset($p['note'])){
 				foreach($p['note'] as $g)
