@@ -6,13 +6,13 @@ class Subscriber_model extends Kiel_Model{
 	}
 
 
-	public subscriber_details_by_search($query)
+	public function subscriber_details_by_search($query)
 	{
 		$query = strtolower(trim($query));
 		$get_queries = "select users.* from users, search where users.id = search.userId AND lower(searchString) ='{$query}';"
 		return $this->data_handler->query($get_queries);
 	}
-	public subscriber_details($id)
+	public function subscriber_details($id)
 	{
 		if(is_numeric($id)){
 			$id = intval($id);
