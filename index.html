@@ -117,7 +117,7 @@
 			}
 			.res{
 				width: 100%;
-				margin: 0 auto;
+				margin: 10px;
 			}
 			.res:nth-child(odd){
 				color: #2ECC71;
@@ -173,7 +173,6 @@
 				padding: 5px;
 				width: 17%;
 				width: calc(20%-10px);
-				border-bottom: 1px solid #CCC;
 				text-overflow: ellipsis;
 				overflow: hidden
 			}
@@ -237,15 +236,15 @@
 					Gusto mo bang kamustahin ang mga mahal mong nasalanta ng bagyo?<br />
 					I-text lang ang mga sumusunod sa <b>21587625</b> (GLOBE/TM):<br /><br />
 
-					<b>“SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
+					<b>"SEARCH &lt;pangalan ng iyong minamahal&gt;"</b><br />
 					para malaman ang mga impormasyong<br />
 					may kaugnay sa iyong minamahal.<br />
 					<br /><br />
-					<b>“SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
+					<b>"SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;"</b><br />
 					Upang makatanggap ng live na update<br />
 					na tumutugma sa pangalan ng iyong minamahal<br />
 					<br /><br />
-					<b>“END SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
+					<b>"END SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;"</b><br />
 					Kung ayaw mo ng makatanggap ng live updates.<br />
 				</p>
 				<button onclick="location.hash='#';location.hash='#desc';">SUBUKAN</button>
@@ -262,7 +261,7 @@
 		</section>
 		<section id="middle">
 			<h3>MANGAMUSTA</h3>
-			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka pindutin ang “Kamustahin”.</span>
+			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka pindutin ang "Kamustahin".</span>
 			<br />
 			<form action="POST" action="#" onsubmit="displayResult(); return false;">
 				<input required="required" type="text" placeholder="Ilagay dito ang buong pangalan ng iyong minamahal" id="name"/>
