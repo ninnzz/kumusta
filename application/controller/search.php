@@ -84,7 +84,7 @@ class Search extends Kiel_Controller
 		$data = $array['feed']['entry'];
 		foreach($data as $p){
 
-			if(strpos(strtolower($p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']), strtolower($searchString))!== false)
+			if(preg_match(/'('.strtolower(str_ireplace(' ','|',$p['gsx$firstname']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname']['$t'])). ')'/, $searchString))
 			if(!isset($tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']])){
 				array_push($dswd, array(
 					'place' => '',
@@ -96,7 +96,7 @@ class Search extends Kiel_Controller
 				$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
 			}
 
-			if(strpos(strtolower($p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']), strtolower($searchString))!== false)
+			if(preg_match(/'('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_2']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_2']['$t'])). ')'/, $searchString))
 			if(!isset($tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -108,7 +108,7 @@ class Search extends Kiel_Controller
 			$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
 			}
 
-			if(strpos(strtolower($p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']), strtolower($searchString))!== false)
+			if(preg_match(/'('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_3']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_3']['$t'])). ')'/, $searchString))
 			if(!isset($tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -120,7 +120,7 @@ class Search extends Kiel_Controller
 			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true;
 			}
 
-			if(strpos(strtolower($p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']), strtolower($searchString))!== false)
+			if(preg_match(/'('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_4']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_4']['$t'])). ')'/, $searchString))
 			if(!isset($tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']])){
 			array_push($dswd, array(
 				'place' => '',
@@ -163,6 +163,7 @@ class Search extends Kiel_Controller
 		$array = json_decode($response, TRUE);
 		$data = $array['data']['posts'];
 		foreach($data as $p){
+			if(preg_match(/'('.strtolower(str_ireplace(' ','|',$p['location'].' '.$['name'].' '.$p['message'] )). ')'/, $searchString))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
 				array_push($bangon, array(
 					'place' => $p['location'],
