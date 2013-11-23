@@ -30,15 +30,17 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
-				print_r($user['1']);
-				print_r($user['2']);
-				print_r('You will be receiving the list containing '.$name);
+				// print_r($user['1']);
+				// print_r($user['2']);
+				// print_r('You will be receiving the list containing '.$name);
 				//if searching
-				$sms->sendMessage(
+				$response = $sms->sendMessage(
 					$user['1'],
 					$user['2'],
 					'You will be receiving the list containing '.$name
 				);
+
+				echo 'pre:'; print_r($response);
 				//logic for pull here
 			}
 
