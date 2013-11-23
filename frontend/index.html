@@ -119,16 +119,25 @@
 				width: 100%;
 				margin: 0 auto;
 			}
+			.res:nth-child(odd){
+				color: #2ECC71;
+				background: #FFF;
+			}
 			.res a{
 				color: #333;
+				text-decoration: none;
+			}
+			.res a:hover{
+				color: #000;
+				text-decoration: underline;
 			}
 			#results h4{
-				color: #2ECC71;
+				background: #2ECC71;
+				color: #FFF;
 				font-family: "OpenSansBold";
 				clear: both;
 				font-size: 15px;
 				text-align: center;
-				background: #FFF;
 				position: relative;
 				width: 40%;
 				padding: 10px;
@@ -159,7 +168,14 @@
 				width: 300px;
 			}
 			.ggl, .bph, .rbrd, .dswd{
+				float: left;
 				text-align: left;
+				padding: 5px;
+				width: 17%;
+				width: calc(20%-10px);
+				border-bottom: 1px solid #CCC;
+				text-overflow: ellipsis;
+				overflow: hidden
 			}
 			@media screen and (max-width: 960px) {
 				img{
@@ -172,7 +188,7 @@
 					padding: 10px;
 				}
 				.fb{
-					width: 100%;
+					width: 50%;
 					text-align: center;
 				}
 				#results{
@@ -188,6 +204,9 @@
 					margin-right: 50px;
 					width: 50%;
 				}
+				.ggl, .bph, .rbrd, .dswd{
+					width: 100%;
+				}
 			}
 			@media screen and (max-width: 480px) {
 				#top #container{
@@ -202,6 +221,9 @@
 				img{
 					width: 100%;
 					height: auto;
+				}
+				.fb{
+					width: 100%;
 				}
 			}
 		</style>
@@ -248,6 +270,7 @@
 				<button type="submit" id="kamustahin">KAMUSTAHIN</button>
 			<form>
 			<div id="results"></div>
+			<br class="clearfix"/>
 			<img alt="lifeline" src="imgs/lifeline.png" width="100%" height="auto"/>
 			<h3>MAKIPAG-USAP</h3>
 			<span>Sa oras na malaman naming may</span>
@@ -260,8 +283,8 @@
 			<h3>MGA KASOSYO</h3>
 			<a target="_blank" href="//beta.globe.com.ph"><img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/></a>
 			<br />
-			<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/></a>
 			<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/></a>
+			<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/></a>
 			<a target="_blank" href="//bangonph.com"><img src="imgs/bangonph.png" width="177" height="50px" alt="BangonPH"/></a>
 			<br />
 			<span id="copyright">The background image is copyrighted by <a target="_blank" href="//CNN.com">CNN.com</a></span>
@@ -286,7 +309,13 @@
 					button.innerHTML = "KASALUKUYANG KINUKUMUSTA...";
 					xmlhttp = new XMLHttpRequest();
 					xmlhttp.onreadystatechange = function(){
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+						if(xmlhttp.readyState == 1){
+							NProgress.set(0.33);
+						}
+						else if(xmlhttp.readyState == 3){
+							NProgress.set(0.66);
+						}
+						else if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
 							res.innerHTML = "";
 							data = JSON.parse(xmlhttp.responseText);
 							data = data.data;
@@ -300,28 +329,28 @@
 							}
 							res.innerHTML += "<br /><br class='clearfix'/>";
 							
-							data.google.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA GOOGLE</h4>");
+							data.google.length && (res.innerHTML += "<br class='clearfix' /><h4>MGA RESULTA GALING SA GOOGLE</h4>");
 							for(i=0; i < data.google.length; i+=1){
 								if(data.google[i].message && data.google[i].message.length > 5){
 									res.innerHTML += "<div class='res ggl'><a target='_blank' href='"+data.google[i].from+"'>"+data.google[i].message.trim()+"</div>";
 								}
 							}
 							
-							data.dswd.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA DSWD</h4>");
+							data.dswd.length && (res.innerHTML += "<br class='clearfix' /><h4>MGA RESULTA GALING SA DSWD</h4>");
 							for(i=0; i < data.dswd.length; i+=1){
 								if(data.dswd[i].message){
 									res.innerHTML += "<div class='res dswd'><a target='_blank' href='"+data.dswd[i].from+"'>From "+data.dswd[i].sender+" : "+data.dswd[i].message.trim()+" </div>";
 								}
 							}
 							
-							data.bangon.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA BANGONPH</h4>");
+							data.bangon.length && (res.innerHTML += "<br class='clearfix' /><h4>MGA RESULTA GALING SA BANGONPH</h4>");
 							for(i=0; i < data.bangon.length; i+=1){
 								if(data.bangon[i].message){
 									res.innerHTML += "<div class='res bph'><a target='_blank' href='//www.bangonph.com/posts/"+data.bangon[i].id+"'>From "+data.bangon[i].sender+" : "+data.bangon[i].message.trim()+"</div>";
 								}
 							}
 							
-							data.relief.length && (res.innerHTML += "<br /><h4>MGA RESULTA GALING SA RELIEFBOARD</h4>");
+							data.relief.length && (res.innerHTML += "<br class='clearfix'/><h4>MGA RESULTA GALING SA RELIEFBOARD</h4>");
 							for(i=0; i < data.relief.length; i+=1){
 								if(data.relief[i].message){
 									res.innerHTML += "<div class='res rbrd'><a target='_blank' href='//www.reliefboard.com/ph/post.php?id="+data.relief[i].id+"'>From "+unescape(data.relief[i].sender)+" : "+unescape(data.relief[i].message.trim())+"</div>";
@@ -333,7 +362,6 @@
 					};
 					xmlhttp.open("GET","http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/search?source=web&query="+a,true);
 					xmlhttp.send();
-					NProgress.set(0.6);
 				}
 				else{
 					alert("Pakilagay ng mabuti ang pangalan ng iyong minamahal");
