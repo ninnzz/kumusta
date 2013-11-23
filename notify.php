@@ -11,8 +11,6 @@ $json = file_get_contents('php://input');
 $json = stripslashes($json);
 $message = json_decode($json, true);
 
-print_r($message);
-
 //if we received a message
 if($message) {
 	if(!isset($message['inboundSMSMessageList']['inboundSMSMessage'])) {
@@ -24,41 +22,54 @@ if($message) {
 			continue;	
 		}
 
-		if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
-			$name = split(" ", strtoupper($item['message']));
-			$name = implode(" ", array_splice($name, 1));
-			//if searching
-			$sms->sendMessage(
-				$user['access_token'],
-				$user['subscriber_number'],
-				'You will be receiving the list containing '.$name
-			);
 
-			//logic for pull here
-		}
+		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
+		echo 'SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;';
+		$user = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;');
 
-		if(strpos(strtoupper($item['message']), 'SUBSCRIBE SEARCH') === 0) {
-			$name = split(" ", strtoupper($item['message']));
-			$name = implode(" ", array_splice($name, 2));
-			//if subscribing to search
-			$sms->sendMessage(
-				$user['access_token'],
-				$user['subscriber_number'],
-				'You will be receiving the list containing your '.$name.' every <time interval here>'
-			);
+		print_r($user);
 
-			//logic for adding to cron job here
-		}
+		$user = is_array($user) ? $user[0] : NULL;
 
-		if(strpos(strtoupper($item['message']), 'END SUBSCRIBE SEARCH') === 0) {
-			$name = split(" ", strtoupper($item['message']));
-			$name = implode(" ", array_splice($name, 3));
-			//if ending subscription
-			$sms->sendMessage(
-				$user['access_token'],
-				$user['subscriber_number'],
-				'You have successfully ended your subscription for updates about '.$name
-			);
+		echo "the user: "; print_r($user);
+
+		if($user) {
+			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
+				$name = split(" ", strtoupper($item['message']));
+				$name = implode(" ", array_splice($name, 1));
+				//if searching
+				$sms->sendMessage(
+					$user['access_token'],
+					$user['phoneNumber'],
+					'You will be receiving the list containing '.$name
+				);
+
+				//logic for pull here
+			}
+
+			if(strpos(strtoupper($item['message']), 'SUBSCRIBE SEARCH') === 0) {
+				$name = split(" ", strtoupper($item['message']));
+				$name = implode(" ", array_splice($name, 2));
+				//if subscribing to search
+				$sms->sendMessage(
+					$user['access_token'],
+					$user['phoneNumber'],
+					'You will be receiving the list containing your '.$name.' every <time interval here>'
+				);
+
+				//logic for adding to cron job here
+			}
+
+			if(strpos(strtoupper($item['message']), 'END SUBSCRIBE SEARCH') === 0) {
+				$name = split(" ", strtoupper($item['message']));
+				$name = implode(" ", array_splice($name, 3));
+				//if ending subscription
+				$sms->sendMessage(
+					$user['access_token'],
+					$user['phoneNumber'],
+					'You have successfully ended your subscription for updates about '.$name
+				);
+			}
 		}
 	}
 }
