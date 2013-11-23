@@ -7,7 +7,6 @@ class Search extends Kiel_Controller
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
 
-
 		$ret = array();
 		$count=0;
 		$tmp = array();
@@ -23,7 +22,7 @@ class Search extends Kiel_Controller
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
-		foreach($array['data'] as $p){
+		foreach($array as $p){
 				$name = "";
 				
 				if(isset($p['tags'])) {
@@ -43,7 +42,6 @@ class Search extends Kiel_Controller
 				));
 				}
 		}
-		
 
 		$ret['fb'] = $fb;
 
