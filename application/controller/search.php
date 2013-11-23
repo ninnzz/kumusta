@@ -218,6 +218,8 @@ class Search extends Kiel_Controller
 		if($array['data']['result_count'] > 0){
 		$data = $array['data']['result'];
 		foreach($data as $p){
+			$matches=array();
+			preg_match('(+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-7]{7,7}',$p['sender_number'], $matches);
 			array_push($relief, array(
 				'id' => $p['id'],
 				'place' => urldecode($p['place_tag']),
@@ -226,6 +228,9 @@ class Search extends Kiel_Controller
 				'message' => urldecode($p['message']),
 				'from' => $url,
 			));
+			if(isset($id) && isset($matches[0])){
+				call($id, $searchString, $matches[0]);
+			}
 		}}
 		}
 		$ret['relief'] = $relief;
