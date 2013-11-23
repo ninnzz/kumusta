@@ -50,14 +50,13 @@ class Search extends Kiel_Controller
 
 		}
 		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($searchString);
-		echo $url;
 		$response = file_get_contents($url);
 		if($response){
 		$data = preg_replace("/pfif\:/", "", $response);
 		$xml = simplexml_load_string($data);
 		$json = json_encode($xml);
 		$array = json_decode($json,TRUE);
-		
+		var_dump($array);
 		foreach($array['person'] as $p){
 			$mess = "";
 			if(isset($p['note'])){
