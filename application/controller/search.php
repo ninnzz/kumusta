@@ -146,10 +146,10 @@ class Search extends Kiel_Controller
 		$data = $array['data']['result'];
 		foreach($data as $p){
 			array_push($relief, array(
-				'place' => $p['place_tag'],
-				'sender' => $p['sender'],
+				'place' => urldecode($p['place_tag']),
+				'sender' => urldecode($p['sender']),
 				'number' => $p['sender_number'],
-				'message' => $p['message'],
+				'message' => urldecode($p['message']),
 				'from' => $url,
 			));
 		}}
