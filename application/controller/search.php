@@ -61,8 +61,8 @@ class Search extends Kiel_Controller
 					$mess = $g['status'] ."\n" .$g['text'];
 			}
 			array_push($google, array(
-				'place' => $p['home_street']. ' : '. $p['home_state'],
-				'sender' => $p['full_name'] .' ' .$p['alternate_names'],
+				'place' => $p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
+				'sender' => $p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
 				'number' => '',
 				'message' => preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
 				'from' => $p['source_url'],
