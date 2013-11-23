@@ -27,7 +27,7 @@
 				padding: 0;
 				width: 100%;
 			}
-			.clearfix{
+			.clearfix{	
 				clear: both;
 			}
 			section{
@@ -42,21 +42,17 @@
 				background-repeat: no-repeat;
 				background-size: cover;
 				background-position: center;
+				background-color: #FFF;
 				position: relative;
-				padding: 0;
 			}
 			#top #container{
 				text-align: right;
 				float: right;
-				padding-right: 150px;
-				width: 50%;
+				width: 40%;
+				padding: 15px;
+				margin-right: 150px;
 				margin-top: 30px;
-			}
-			#overlay{
-				position: absolute;
-				bottom: 0;
-				background-color: rgba(46,204,113,0.16);
-				padding: 30px;
+				background: rgba(0,0,0,0.5);
 			}
 			#middle{
 				background-color: #E9EEF2;
@@ -81,11 +77,12 @@
 				font-family: "OpenSansBold";
 			}
 			h1{
-				font-size: 40px;
+				font-size: 50px;
 				text-align: center;
 			}
 			h3{
 				margin: 20px 0;
+				font-size: 25px;
 			}
 			h6{
 				text-align: center;
@@ -113,14 +110,43 @@
 			#copyright{
 				font-size: 12px;
 			}
+			#partners{
+				width: 49%;
+				float: left;
+			}
+			#links{
+				float: left;
+				width: 49%;
+			}
+			.white-button{
+				background: #FFF;
+				color: #2ECC71;
+				text-decoration: none;
+				padding: 5px 50px;
+				font-family: "OpenSansBold";
+			}
+			@media screen and (max-width: 960px) {
+				img{
+					width: 100%;
+					height: auto;
+				}
+			}
 			@media screen and (max-width: 768px) {
 				#top #container{
 					text-align: center;
+					margin-right: 50px;
+					width: 50%;
+				}
+			}
+			@media screen and (max-width: 480px) {
+				#partners,#links{
+					width: 100%;
 				}
 			}
 			@media screen and (max-width: 480px) {
 				#top #container{
 					width: 100%;
+					margin: 0;
 					padding: 0;
 					text-align: center;
 				}
@@ -131,9 +157,6 @@
 					width: 100%;
 					height: auto;
 				}
-				#lifeline{
-					margin-top: -50px;
-				}
 			}
 		</style>
 	</head>
@@ -141,33 +164,29 @@
 		<section id="top">
 			<div id="container">
 				<h1>KUMUSTA KA NA?</h1>
-				<h6>(How are you?)</h6>
+				<h6>#YolandPH</h6>
 				<p>
-					I-text lang ang<br />
-					“SEARCH <pangalan ng iyong minamahal>”<br />
-					sa <b>21587625</b> (GLOBE/TM)<br />
+					Gusto mo bang kamustahin ang mga mahal mong nasalanta ng bagyo?<br />
+					I-text lang ang mga sumusunod sa <b>21587625</b> (GLOBE/TM):<br /><br />
+
+					<b>“SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
 					para malaman ang mga impormasyong<br />
 					may kaugnay sa iyong minamahal.<br />
 					<br /><br />
-					Pwede ring makatanggap ng live na update<br />
+					<b>“SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
+					Upang makatanggap ng live na update<br />
 					na tumutugma sa pangalan ng iyong minamahal<br />
-					sa pamamagitan ng pag-text ng<br />
-					“SUBSCRIBE SEARCH <pangalan ng iyong minamahal>”<br />
-					sa <b>21587625</b> (GLOBE/TM)<br />
 					<br /><br />
-					Kung ayaw mo ng makatanggap ng live updates,<br />
-					i-text lang ang “END SUBSCRIBE SEARCH <pangalan ng iyong minamahal”<br />
-					sa <b>21587625</b>. 
+					<b>“END SUBSCRIBE SEARCH &lt;pangalan ng iyong minamahal&gt;”</b><br />
+					Kung ayaw mo ng makatanggap ng live updates.<br />
 				</p>
-				<br class="clearfix"/>
 			</div>
 			<br class="clearfix"/>
-			<div id="overlay">
-				Ang "Kumusta Ka Na?" ay isang paraan upang kamustahin ang mga mahal mo sa buhay lalo na yung mga nasalanta ng bagyong Yolanda
-gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, ReliefBoard, DSWD at mga mabubuting loob.
-			</div>
 		</section>
-		
+		<section id="desc">
+			Ang "Kumusta Ka Na?" ay isang paraan upang kamustahin ang mga mahal mo sa buhay lalo na yung mga nasalanta ng bagyong Yolanda<br />
+			gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, ReliefBoard, DSWD at mga mabubuting loob.
+		</section>
 		<section id="middle">
 			<h3>MANGAMUSTA</h3>
 			<span>Maaari mo ring malaman ang kinalalagyan ng iyong mahal sa pamamagitan ng paglagay ng kanyang buong pangalan sa baba atsaka pindutin ang “Kamustahin”.</span>
@@ -175,7 +194,7 @@ gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, Relief
 			<input type="text" placeholder="Ilagay dito ang buong pangalan ng iyong minamahal"/>
 			<br />
 			<button>KAMUSTAHIN</button>
-			<img id="lifeline" alt="lifeline" src="imgs/lifeline.png" width="100%" height="auto"/>
+			<img alt="lifeline" src="imgs/lifeline.png" width="100%" height="auto"/>
 			<h3>MAKIPAG-USAP</h3>
 			<span>BLAH BLAH BLAH ANG GWAPO GWAPO NI RAVEN LAGRIMAS. http://facebook.com/ven.lagrimas</span>
 			<br /><br />
@@ -184,24 +203,28 @@ gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, Relief
 		</section>
 		
 		<section id="bottom">
-			<h3>MGA KASOSYO</h3>
-			<img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/>
-			<br />
-			<img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/>
-			<img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/>
-			<img src="imgs/oplanhatid.png" width="302px" height="88px" alt="Oplan Hatid"/>
-			<br />
-			<span id="copyright">Stratovate Devteam. 2013. Tinidor-in ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
+			<div id="partners">
+				<h3>MGA KASOSYO</h3>
+				<a target="_blank" href="//beta.globe.com.ph"><img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/></a>
+				<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/></a>
+				<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/></a>
+				<br />
+			</div>
+			<div id="links">
+				<h3>TUMULONG</h3>
+				<span>Marami ka bang nababalitaan? Nais mong tumulong sa mga nangangailangan? Tignan ang listahan ng mga taong nangungulila..</span>
+				<br /><br />
+				<a target="_blank" class="white-button" href="tumulong.html">SUBUKANG TUMULONG</a>
+			</div>
+			<br class="clearfix"/><br />
+			<span id="copyright">Stratovate Devteam. 2013. Tinidorin ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
 		</section>
 		
 		<script type="text/javascript">
 			(function(){
 				var top = document.getElementById('top'),
 					respond = function(){
-						var overlay = document.getElementById('overlay');
-						console.log(overlay.clientHeight);
-						top.style.minHeight = (window.innerHeight-overlay.clientHeight)+"px";
-						top.style.paddingBottom = overlay.clientHeight+"px";
+						top.style.minHeight = (window.innerHeight)+"px";
 					};
 				window.onresize = respond;
 				respond();
