@@ -6,6 +6,7 @@ class Search extends Kiel_Controller
 		$this->required_fields($required,$this->get_args);
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
+		$id = $this->get_args['id'];
 
 		$ret = array();
 		$count=0;
@@ -36,6 +37,7 @@ class Search extends Kiel_Controller
 					)
 					
 				){
+
 				array_push($fb, array(
 					'place' => '',
 					'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
@@ -66,15 +68,21 @@ class Search extends Kiel_Controller
 				foreach($p['note'] as $g)
 					$mess = $g['status'] ."\n" .$g['text'];
 			}
-
-
+			$matches=array();
+			preg_match('(+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-7]{7,7}',$p['description'], $matches);
+			
 			array_push($google, array(
 				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
 				'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
-				'number' => '',
+				'number' => "".$matches[0],
 				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
 				'from' => "".$p['source_url'],
 			));	
+
+			if(isset($id) && isset($matches[0])){
+				call($id, $searchString, $matches[0]);
+			}
+			
 		}
 		}
 
@@ -171,6 +179,8 @@ class Search extends Kiel_Controller
 		foreach($data as $p){
 			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($searchString))))
 			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($searchString))) {
+			$matches=array();
+			preg_match('(+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-7]{7,7}',$p['phone'], $matches);
 				array_push($bangon, array(
 					'id'	=> $p['id'],
 					'place' => $p['location'],
@@ -179,6 +189,10 @@ class Search extends Kiel_Controller
 					'message' => $p['message'],
 					'from' => $url,
 				));
+
+			if(isset($id) && isset($matches[0])){
+				call($id, $searchString, $matches[0]);
+			}
 			}
 		}
 		}
