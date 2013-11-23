@@ -43,7 +43,7 @@ class Search extends Kiel_Controller
 				}
 		}
 
-		$ret = array('fb' => $fb)
+		$ret = array('fb' => $fb);
 
 		}
 		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.$searchString;
