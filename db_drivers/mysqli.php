@@ -134,7 +134,7 @@
 				$err = $link->error;
 				$link->close();
  				header("HTTP/1.0 500 Internal Server Error");
-    			throw new Exception("Database Connection Error [" . $err . "] query=>({$query_message})", 1);
+    			throw new Exception("Database Connection Error [" . $err . "]", 1);
 			}
 
 			while($row = $result->fetch_assoc()){
