@@ -26,16 +26,14 @@ if($message) {
 		$result = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $item['senderAddress']).'\' LIMIT 1;');
 		$user = $result->fetch_row();
 
-		echo "the user: "; print_r($user);
-
 		if($user) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
 				//if searching
 				$sms->sendMessage(
-					$user['access_token'],
-					$user['phoneNumber'],
+					$user['1'],
+					$user['2'],
 					'You will be receiving the list containing '.$name
 				);
 				//logic for pull here
@@ -46,8 +44,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 2));
 				//if subscribing to search
 				$sms->sendMessage(
-					$user['access_token'],
-					$user['phoneNumber'],
+					$user['1'],
+					$user['2'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
 
@@ -59,8 +57,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 3));
 				//if ending subscription
 				$sms->sendMessage(
-					$user['access_token'],
-					$user['phoneNumber'],
+					$user['1'],
+					$user['2'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
 			}
