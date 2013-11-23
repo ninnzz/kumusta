@@ -19,7 +19,7 @@ class Search extends Kiel_Controller
 		$bangon = array();
 
 
-		$url = 'http://graph.facebook.com/666212400066213/photos?fields=name,tags,link&limit=1000';
+		$url = 'http://graph.facebook.com/666212400066213/photos?fields=name,tag,source,link&limit=1000';
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, true);
@@ -38,6 +38,7 @@ class Search extends Kiel_Controller
 					'sender' => $p['name'],
 					'number' => '',
 					'message' => strstr($p['name'], 'Help'),
+					'image' => $p['source'],
 					'from' => $p['link'],
 				));
 				}
