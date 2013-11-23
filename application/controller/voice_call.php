@@ -11,11 +11,12 @@ class Voice_call extends Kiel_Controller
 		
 
 		$tropo->ask('Please type the four digit combination then press hash tag', array(
-  			"choices"=>'DIGIT',
+  			"choices"=>'[DIGITS]',
   			"name" => "confid", 
     		"attempts" => 5,
     		"timeout" => 60, 
     		"mode" => "dtmf",
+    		"terminator" => "#",
   			"event"=> array(
     			'timeout' => 'Speak up!',
     		)
