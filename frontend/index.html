@@ -41,6 +41,7 @@
 				background-attachment: fixed;
 				background-repeat: no-repeat;
 				background-size: cover;
+				background-position: center;
 				position: relative;
 				padding: 0;
 			}
@@ -102,6 +103,25 @@
 			#copyright{
 				font-size: 12px;
 			}
+			@media screen and (max-width: 768px) {
+				#top #container{
+					text-align: center;
+				}
+			}
+			@media screen and (max-width: 480px) {
+				#top #container{
+					width: 100%;
+					padding: 0;
+					text-align: center;
+				}
+				input{
+					width: 80%;
+				}
+				img{
+					width: 100%;
+					height: auto;
+				}
+			}
 		</style>
 	</head>
 	<body>
@@ -112,7 +132,7 @@
 				<p>
 					I-text lang ang<br />
 					“SEARCH <pangalan ng iyong minamahal>”<br />
-					sa 21581001 (GLOBE/TM)<br />
+					sa <b>21581001</b> (GLOBE/TM)<br />
 					para malaman ang mga impormasyong<br />
 					may kaugnay sa iyong minamahal.<br />
 					<br /><br />
@@ -120,13 +140,15 @@
 					na tumutugma sa pangalan ng iyong minamahal<br />
 					sa pamamagitan ng pag-text ng<br />
 					“SUBSCRIBE SEARCH <pangalan ng iyong minamahal>”<br />
-					sa 21581001 (GLOBE/TM)<br />
+					sa <b>21581001</b> (GLOBE/TM)<br />
 					<br /><br />
 					Kung ayaw mo ng makatanggap ng live updates,<br />
 					i-text lang ang “END SUBSCRIBE SEARCH <pangalan ng iyong minamahal”<br />
-					sa 21581001. 
+					sa <b>21581001</b>. 
 				</p>
+				<br class="clearfix"/>
 			</div>
+			<br class="clearfix"/>
 			<div id="overlay">
 				Ang Kumusta Ka Na Ba ay isang paraan upang kamustahin ang mga mahal mo sa buhay lalo na yung mga nasalanta ng bagyong Yolanda
 gamit ang mga impormasyong nakalap mula sa Rappler, Google Person Finder, ReliefBoard, DSWD at mga mabubuting loob.
@@ -158,7 +180,10 @@ pindutin ang “Kamustahin”.</span>
 			(function(){
 				var top = document.getElementById('top'),
 					respond = function(){
-						top.style.height = window.innerHeight+"px";
+						var overlay = document.getElementById('overlay');
+						console.log(overlay.clientHeight);
+						top.style.minHeight = (window.innerHeight-overlay.clientHeight)+"px";
+						top.style.paddingBottom = overlay.clientHeight+"px";
 					};
 				window.onresize = respond;
 				respond();
