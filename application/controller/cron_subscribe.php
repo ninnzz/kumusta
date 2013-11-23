@@ -5,7 +5,7 @@ class Cron_subscribe extends Kiel_Controller
 	{
 		$key = '6qxBuD5aUyrwvscpkFt9';
 		$number = $number;
-		$message = "Magandang Araw! Kung ikaw ay may alam na impormasyong tungkol kay {$entry}, maaraing tumawag sa 21581001 upang makausap mo ang taong naghahanap sa kanya. Ang iyong NUMBER CODE ay : {$id}"
+		$message = "Magandang Araw! Kung ikaw ay may alam na impormasyong tungkol kay {$entry}, maaraing tumawag sa 21581001 upang makausap mo ang taong naghahanap sa kanya. Ang iyong NUMBER CODE ay : {$id}";
 		$message = urlencode($message).' [This is an auto generated message, DO NOT REPLY! Tumawag sa 21581001 at ilagay ang number code.]';
 		$from = 'KumustaKNB';
 		$url = 'http://api.semaphore.co/api/sms';
