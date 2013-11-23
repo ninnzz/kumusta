@@ -4,7 +4,6 @@ include('PHP/src/GlobeApi.php');
 $globe = new GlobeApi();
 $sms = $globe->sms(7625);
 
-echo "<pre>";
 // $test = array(1,2,3,4,5);
 // print_r(array_splice($test, 1));
 
@@ -31,17 +30,13 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
-				print_r($user['1']);
-				print_r($user['2']);
-				print_r('You will be receiving the list containing '.$name);
 				//if searching
 				$response = $sms->sendMessage(
-					$user['1'],
 					$user['2'],
+					$user['1'],
 					'You will be receiving the list containing '.$name
 				);
 
-				echo 'pre:'; print_r($response);
 				//logic for pull here
 			}
 
@@ -50,8 +45,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 2));
 				//if subscribing to search
 				$sms->sendMessage(
-					$user['1'],
 					$user['2'],
+					$user['1'],
 					'You will be receiving the list containing your '.$name.' every <time interval here>'
 				);
 
@@ -63,8 +58,8 @@ if($message) {
 				$name = implode(" ", array_splice($name, 3));
 				//if ending subscription
 				$sms->sendMessage(
-					$user['1'],
 					$user['2'],
+					$user['1'],
 					'You have successfully ended your subscription for updates about '.$name
 				);
 			}
