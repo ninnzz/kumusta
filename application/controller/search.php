@@ -4,14 +4,11 @@ class Search extends Kiel_Controller
 	public function index_get(){
 		$required = array('query','source');
 		$this->required_fields($required,$this->get_args);
-<<<<<<< HEAD
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
 		$id = $this->get_args['id'];
-=======
 		$request = urldecode($this->get_args['source']);
 		$searchString = urldecode($this->get_args['query']);
->>>>>>> c52f76f4d63651966750d849edfe0ec38fec7901
 
 		$ret = array();
 		$count=0;
@@ -52,17 +49,11 @@ class Search extends Kiel_Controller
 					'from' => $p['link'],
 				));
 				}
-			}
-			$p['name'] = preg_replace("/  /", " ", preg_replace("/(\r\n|\r|\n)/", " ", $p['name'])) .' '.$name;
-			if(strpos(strtolower($p['name']), strtolower($searchString)) !== false){
-				$fb[] = $p;
-			}
 		}
-
+		
 		$ret['fb'] = $fb;
-
-
 		}
+
 		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($searchString);
 		$response = file_get_contents($url);
 		if($response){
