@@ -188,20 +188,10 @@ class Search extends Kiel_Controller
 		$ret['bangon'] = $bangon;
 
 		if($request == 'mobile'){			// return 3 E
-			if(isset($offset)){
-				$arr = array_slice(array_merge($fb, $google,$dswd, $reliefe, $bangon), $offset);
-			} 
-
-			if(isset($limit)){
-				$arr = array_slice($arr, 0, $limit);
-			
-				$this->response(array('status'=>'Success', 'data'=>$arr), 200);
-			}
-
-			
-			
-			$arr = array_slice( (isset($arr))?$arr:array_merge($fb, $google, $dswd,$relief, $bangon),0,3);
-			
+			$arr = array_slice(
+					array_merge($fb, $google, $dswd,$relief, $bangon),
+							(isset($offset)) ? $offset : 0,
+							(isset($limit)) ? $limit : 3 );
 			
 			$arr['count'] = count($arr);
 
