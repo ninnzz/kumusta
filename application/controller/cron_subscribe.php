@@ -286,7 +286,7 @@ class Cron_subscribe extends Kiel_Controller
 					$str .= " . . . . Masyadong madami ang resulta para sa hinahanap mo. Subukang pumunta sa http://pprmint.github.io/kumusta/ para kumpletong listahan ng hinahanap.";
 				}
 			}
-		
+			$str = urlencode($str);
 			$url = "http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/callback.php";
 			$fields_string = "message={$str}&phone_number=".$bogart['phoneNumber'];
 
@@ -294,7 +294,7 @@ class Cron_subscribe extends Kiel_Controller
 
 			//set the url, number of POST vars, POST data
 			curl_setopt($ch,CURLOPT_URL, $url);
-			curl_setopt($ch,CURLOPT_POST, 4);
+			curl_setopt($ch,CURLOPT_POST, 2);
 			curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 
 			//execute post
@@ -303,10 +303,6 @@ class Cron_subscribe extends Kiel_Controller
 			//close connection
 			curl_close($ch);
 
-
-			print_r($result);
-			print_r($str);
-			die();
 
 		} // end of main looop
 
