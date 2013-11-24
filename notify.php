@@ -84,7 +84,7 @@ if($message) {
 
 				$response = $charge->charge(
 				    0,
-				    $name;
+				    $name
 				);
 
 				print_r($response);
