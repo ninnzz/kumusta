@@ -189,7 +189,7 @@ class Search extends Kiel_Controller
 
 		if($request == 'mobile'){			// return 3 E
 			$mix_arr = array_merge($fb, $google, $dswd,$relief, $bangon);
-			$count = (count($mix_arr) > 3)?:true:false;
+			$count = (count($mix_arr) > 3)?true:false;
 			$arr = array_slice(
 					$mix_arr,
 							(isset($offset)) ? $offset : 0,
