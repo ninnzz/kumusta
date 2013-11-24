@@ -63,7 +63,30 @@ if($message) {
 		        $response = curl_exec($ch);
 		        curl_close($ch);
 
-		        print_r($response);
+		        $res = json_decode($response, true);
+		        $data = $res['data'];
+
+		        $str = "";
+		        foreach($data as $x) {
+		        	$str.=$x['message']." | ";
+		        }
+
+		        $str = urlencode($str);
+				$url = "http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/callback.php";
+				$fields_string = "message={$str}&phone_number=".$user['1'];
+
+				$ch = curl_init();
+
+				//set the url, number of POST vars, POST data
+				curl_setopt($ch,CURLOPT_URL, $url);
+				curl_setopt($ch,CURLOPT_POST, 2);
+				curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+				//execute post
+				$result = curl_exec($ch);
+
+				//close connection
+				curl_close($ch);
 			}
 
 			if(strpos(strtoupper($item['message']), 'SUBSCRIBE SEARCH') === 0) {
