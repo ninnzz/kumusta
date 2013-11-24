@@ -20,6 +20,7 @@
 				$user['1'],
 				'You will be receiving the list containing '.$name
 			);
+		print_r($sms);
 		mysqli_close($link); 
 	}
 
