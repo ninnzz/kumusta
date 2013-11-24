@@ -7,7 +7,7 @@ class Search extends Kiel_Controller
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
 		$offset= $this->get_args['offset'];
-		limit = $this->get_args['limit'];
+		$limit = $this->get_args['limit'];
 		$ret = array();
 		$count=0;
 		$tmp = array();
