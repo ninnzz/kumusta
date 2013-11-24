@@ -14,23 +14,19 @@
 		$result = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $_POST['phone_number']).'\' LIMIT 1;');
 		$user = $result->fetch_row();
 
-
 		$i = 0;
 		$msglen = strlen($_POST['message']);
 		$newstr = substr($_POST['message'], 0, 150);
+		$nummes = ceil(strlen($_POST['message'])/150);
 		do {
-
 			$sms = $globe
 				->sms(7625)
 				->sendMessage(
 					$user['2'],
 					$user['1'],
-					$newstr
+					'('.++$i.'/'.$nummes.') '.$newstr
 				);
-			$newstr = substr($_POST['message'], ++$i*150, 150);
-
-			echo $newstr."<br/>";
-
+			$newstr = substr($_POST['message'], $i*150, 150);
 		} while ($i*150 < $msglen);
 
 		mysqli_close($link); 
