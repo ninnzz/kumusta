@@ -10,6 +10,7 @@
 	);
 
 	if(isset($_POST['message']) && isset($_POST['phone_number'])) {
+		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
 		$result = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $_POST['phone_number']).'\' LIMIT 1;');
 		$user = $result->fetch_row();
 		$sms = $globe
@@ -19,6 +20,7 @@
 				$user['1'],
 				'You will be receiving the list containing '.$name
 			);
+		mysqli_close($link); 
 	}
 
 	if(isset($_REQUEST['code'])) {
