@@ -74,8 +74,7 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'DONATE') === 0) {
 				$result = $link->query('SELECT * FROM donations ORDER BY id DESC LIMIT 1;');
 				$donation = $result->fetch_row();
-				$name = split(" ", strtoupper($item['message']));
-				$name = implode(" ", array_splice($name, 3));
+				
 				//if donating
 				$charge = $globe->payment(
 				    $user['2'],
@@ -87,10 +86,9 @@ if($message) {
 				    ($donation[0]+1)
 				);
 
-				$query = 'DELETE FROM search WHERE %s;';
-				$query = sprintf($query, 'userId = '.$user[0].' AND searchString = \''.$name.'\'');
-				$response = $link->query($query);
-
+print_r($donation);
+print_r($response);
+				echo 'yey';
 			}
 		}
 	}
