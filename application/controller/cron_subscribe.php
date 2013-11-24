@@ -283,7 +283,7 @@ class Cron_subscribe extends Kiel_Controller
 				}
 
 				if($count > 3){
-					$str .= " . . . . Masyadong madami ang resulta para sa hinahanap mo. Subukang pumunta sa http://pprmint.github.io/kumusta/ para kumpletong listahan ng hinahanap."
+					$str .= " . . . . Masyadong madami ang resulta para sa hinahanap mo. Subukang pumunta sa http://pprmint.github.io/kumusta/ para kumpletong listahan ng hinahanap.";
 				}
 			}
 		
