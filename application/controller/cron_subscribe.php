@@ -43,210 +43,267 @@ class Cron_subscribe extends Kiel_Controller
 		foreach($res['result'] as $bogart){
 		// put here the function for searching just loop through the result and send message
 		//pag nakakita ka ng number, may tatawagin kang API..
-		$reply_string  ="";
+			$reply_string  ="";
 
-		$ret = array();
-		$count=0;
-		$tmp = array();
+			$ret = array();
+			$count=0;
+			$tmp = array();
 
-		$fb = array();
-		$google=array();
-		$dswd=array();
-		$relief = array();
-		$bangon = array();
+			$fb = array();
+			$google=array();
+			$dswd=array();
+			$relief = array();
+			$bangon = array();
 
 
-		$url = 'http://graph.facebook.com/666212400066213/photos?fields=name,tags,source,link&limit=1000';
-		$response = file_get_contents($url);
-		if($response){
-		$array = json_decode($response, true);
-		foreach($array['data'] as $p){
-				$name = "";
-				if(isset($p['tags'])) {
-					foreach($p['tags']['data'] as $q){
-						$name =$name . $q['name'].' & ';
+			$url = 'http://graph.facebook.com/666212400066213/photos?fields=name,tags,source,link&limit=1000';
+			$response = file_get_contents($url);
+			if($response){
+				$array = json_decode($response, true);
+				foreach($array['data'] as $p){
+					$name = "";
+					if(isset($p['tags'])) {
+						foreach($p['tags']['data'] as $q){
+							$name =$name . $q['name'].' & ';
+						}
+					}
+					if(preg_match
+						(
+						strtolower('/('.preg_replace('[ \t\n]','|',urldecode($bogart['searchString'])).')/'),
+						strtolower($name.' '.$p['name'])
+						)
+						
+					){
+					array_push($fb, array(
+						'place' => '',
+						'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
+						'number' => '',
+						'message' => strstr($p['name'], 'Help'),
+						'image' => $p['source'],
+						'from' => $p['link'],
+						's_type' => 'facebook'
+					));
 					}
 				}
-				if(preg_match
-					(
-					strtolower('/('.preg_replace('[ \t\n]','|',urldecode($bogart['searchString'])).')/'),
-					strtolower($name.' '.$p['name'])
-					)
-					
-				){
-				array_push($fb, array(
-					'place' => '',
-					'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
-					'number' => '',
-					'message' => strstr($p['name'], 'Help'),
-					'image' => $p['source'],
-					'from' => $p['link'],
-					's_type' => 'facebook'
-				));
+
+				$ret['fb'] = $fb;
+
+			}
+
+			$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($bogart['searchString']);
+			$response = file_get_contents($url);
+			if($response){
+				$data = preg_replace("/pfif\:/", "", $response);
+				$xml = simplexml_load_string($data);
+				$json = json_encode($xml);
+				$array = json_decode($json,TRUE);
+			
+			
+				foreach($array['person'] as $p){
+					$mess = "";
+					if(isset($p['note'])){
+						foreach($p['note'] as $g)
+							$mess = $g['status'] ."\n" .$g['text'];
+					}
+
+					$matches = array();
+					preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['description'], $matches);
+					if(preg_match(str_ireplace(" ","|",strtolower(" ".$p['home_street'].' '.$p['home_city'].' '. $p['home_state']." ".$p['full_name'] .' ' .$p['alternate_names'].' '.$p['given_name'].' '.$p['family_name']." ".preg_replace("/(\r\n|\r|\n)/", "", $p['description'] . $mess))), strtolower($bogart['searchString'])) && $matches[0]) $this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
+						$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
+					array_push($google, array(
+						'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
+						'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
+						'number' => "".$matches[0],
+						'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
+						'from' => "".$p['source_url'],
+						's_type' => 'google'
+					));
+				
+
 				}
-		}
+			}
 
-		$ret['fb'] = $fb;
+			
+			$ret['google'] = $google;
+
+			$tmp = array();
+			$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.urlencode($bogart['searchString']);
+			$response = file_get_contents($url);
+			if($response){
+				$array = json_decode($response, true);
+				$data = $array['feed']['entry'];
+				foreach($data as $p){
+					if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname']['$t'])). ')/'), strtolower($bogart['searchString'])))
+						if(!isset($tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']])){
+							array_push($dswd, array(
+								'place' => '',
+								'sender' =>	$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t'],
+								'number' => '',
+								'message' => 'Survivor',
+								'from' => $p['id']['$t'],
+								's_type' => 'dswd'
+							));
+							$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
+						}
+
+					if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_2']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_2']['$t'])). ')/'), strtolower($bogart['searchString'])))
+						if(!isset($tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']])){
+							array_push($dswd, array(
+								'place' => '',
+								'sender' =>	$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t'],
+								'number' => '',
+								'message' => 'Survivor',
+								'from' => $p['id']['$t'],
+								's_type' => 'dswd'
+							));
+							$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
+						}
+
+					if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_3']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_3']['$t'])). ')/'), strtolower($bogart['searchString'])))
+						if(!isset($tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']])){
+							array_push($dswd, array(
+								'place' => '',
+								'sender' =>	$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t'],
+								'number' => '',
+								'message' => 'Survivor',
+								'from' => $p['id']['$t'],
+								's_type' => 'dswd'
+							));
+							$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true; 
+						}
+
+					if(	preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_4']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_4']['$t'])). ')/'), strtolower($bogart['searchString'])))
+						if(!isset($tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']])){
+							array_push($dswd, array(
+								'place' => '',
+								'sender' =>	$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t'],
+								'number' => '',
+								'message' => 'Survivor',
+								'from' => $p['id']['$t'],
+								's_type' => 'dswd'
+							));
+							$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
+						}
+				}
+			}
 
 
-		}
-		$url = 'https://www.google.org/personfinder/2013-yolanda/api/search?key=smo7n6_B3sgRMD9Y&q='.urlencode($bogart['searchString']);
-		$response = file_get_contents($url);
-		if($response){
-		$data = preg_replace("/pfif\:/", "", $response);
-		$xml = simplexml_load_string($data);
-		$json = json_encode($xml);
-		$array = json_decode($json,TRUE);
+			$ret['dswd'] = $dswd;
+
+			$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.urldecode($bogart['searchString']).'&offset=0&limit=1000000000';
+			$response = file_get_contents($url);
+			if($response){
+				$json = stripslashes($response);
+				$array = json_decode($json, true);
+				if($array['data']['result_count'] > 0){
+					$data = $array['data']['result'];
+					foreach($data as $p){
+						$matches = array();
+
+						preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['sender_number'], $matches);
+						if($matches[0])	$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
+						array_push($relief, array(
+							'id' => $p['id'],
+							'place' => urldecode($p['place_tag']),
+							'sender' => urldecode($p['sender']),
+							'number' => $matches[0],
+							'message' => urldecode($p['message']),
+							'from' => $url,
+							's_type' => 'relief'
+						));
+					}
+				}
+			}
+			$ret['relief'] = $relief;
+
+			$url = 'http://api.bangonph.com/v1/posts';
+			$response = file_get_contents($url);
+			if($response){
+				$array = json_decode($response, TRUE);
+				$data = $array['data']['posts'];
+				foreach($data as $p){
+					if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($bogart['searchString']))))
+					if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($bogart['searchString']))) {
+					$matches = array();
+					preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['phone'], $matches);
+					if(preg_match('/('.str_ireplace(" ","|",strtolower($p['location'].' '.$p['name'].' '.$p['message'])). ')/', $bogart['searchString']) && $matches[0])
+						$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
+						array_push($bangon, array(
+							'id'	=> $p['id'],
+							'place' => $p['location'],
+							'sender' => $p['name'],
+							'number' => $matches[0],
+							'message' => $p['message'],
+							'from' => $url,
+							's_type' => 'bangon'
+						));
+					}
+				}
+			}
 		
+			$ret['bangon'] = $bangon;
+
+
+			$mix_arr = array_merge($fb, $google,$dswd,$relief,$bangon);
+			$count = count($mix_arr);
+			$rt = array_slice($mix_arr, 0 ,3);
+			$str = "UPDATES FOR ".$bogart['searchString'];
+
+
+			if($count == 0){
+				$str .= " WALANG IMPORMASYON. Subukang pumunta sa http://pprmint.github.io/kumusta/ para sa karagdagang impormasyon."
+			} else {
+
+				foreach ($rt as $r) {
+					if($r['s_type'] === 'facebook'){
+						$m = urldecode($r['message']);
+						$f = urldecode($r['from']);
+						$str .= "    MULA SA FACEBOOK RAPPLER SITE: {$m} URL: {$f} ";
+					}
+					else if($r['s_type'] === 'google'){
+						$m = urldecode($r['message']);
+						$f = urldecode($r['from']);
+						$str .= "   GOOGLE PERSON FINDER: {$m} URL: {$f} ";
+					}
+					else if($r['s_type'] === 'dswd'){
+						$m = urldecode($r['message']);
+						$f = urldecode($r['from']);
+						$str .= "   DSWD SURVIVORS: {$m} SOURCE: {$f} ";
+					} 
+					else if($r['s_type'] === 'relief'){
+						$m = urldecode($r['message']);
+						$f = urldecode($r['from']);
+						$str .= "   RELIEFBOARD: {$m} URL: {$f} ";
+					}
+					else if($r['s_type'] === 'bangon'){
+						$m = urldecode($r['message']);
+						$f = urldecode($r['from']);
+						$str .= "   BANGONPH: {$m} URL: {$f} ";
+					}
+				}
+
+				if($count > 3){
+					$str .= " . . . . Masyadong madami ang resulta para sa hinahanap mo. Subukang pumunta sa http://pprmint.github.io/kumusta/ para kumpletong listahan ng hinahanap."
+				}
+			}
 		
-		foreach($array['person'] as $p){
-			$mess = "";
-			if(isset($p['note'])){
-				foreach($p['note'] as $g)
-					$mess = $g['status'] ."\n" .$g['text'];
-			}
+			$url = "http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/callback.php";
+			$fields_string = "message={$str}&phone_number=".$bogart['phoneNumber'];
 
-			$matches = array();
-			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['description'], $matches);
-			if(preg_match(str_ireplace(" ","|",strtolower(" ".$p['home_street'].' '.$p['home_city'].' '. $p['home_state']." ".$p['full_name'] .' ' .$p['alternate_names'].' '.$p['given_name'].' '.$p['family_name']." ".preg_replace("/(\r\n|\r|\n)/", "", $p['description'] . $mess))), strtolower($bogart['searchString'])) && $matches[0]) $this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
-				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
-			array_push($google, array(
-				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
-				'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
-				'number' => "".$matches[0],
-				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
-				'from' => "".$p['source_url'],
-				's_type' => 'google'
-			));
-		
+			$ch = curl_init();
 
-		}
-		}
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch,CURLOPT_URL, $url);
+			curl_setopt($ch,CURLOPT_POST, 4);
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
 
-		
-		$ret['google'] = $google;
+			//execute post
+			$result = curl_exec($ch);
 
-		$tmp = array();
-		$url = 'http://cors.io/spreadsheets.google.com/feeds/list/0ApSfq4LnrdaRdHBTSllLTVBaSW9UTjlobUZCNXRNN1E/od6/public/values?alt=json&q='.urlencode($bogart['searchString']);
-		$response = file_get_contents($url);
-		if($response){
-		$array = json_decode($response, true);
-		$data = $array['feed']['entry'];
-		foreach($data as $p){
+			//close connection
+			curl_close($ch);
 
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname']['$t'])). ')/'), strtolower($bogart['searchString'])))
-			if(!isset($tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']])){
-				array_push($dswd, array(
-					'place' => '',
-					'sender' =>	$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t'],
-					'number' => '',
-					'message' => 'Survivor',
-					'from' => $p['id']['$t'],
-					's_type' => 'dswd'
-				));
-				$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
-			}
-
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_2']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_2']['$t'])). ')/'), strtolower($bogart['searchString'])))
-			if(!isset($tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']])){
-			array_push($dswd, array(
-				'place' => '',
-				'sender' =>	$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t'],
-				'number' => '',
-				'message' => 'Survivor',
-				'from' => $p['id']['$t'],
-				's_type' => 'dswd'
-			));
-			$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
-			}
-
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_3']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_3']['$t'])). ')/'), strtolower($bogart['searchString'])))
-			if(!isset($tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']])){
-			array_push($dswd, array(
-				'place' => '',
-				'sender' =>	$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t'],
-				'number' => '',
-				'message' => 'Survivor',
-				'from' => $p['id']['$t'],
-				's_type' => 'dswd'
-			));
-			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true; 
-			}
-
-			if(	preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['gsx$firstname_4']['$t']).'|'. str_ireplace(' ','|',$p['gsx$lastname_4']['$t'])). ')/'), strtolower($bogart['searchString'])))
-			if(!isset($tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']])){
-			array_push($dswd, array(
-				'place' => '',
-				'sender' =>	$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t'],
-				'number' => '',
-				'message' => 'Survivor',
-				'from' => $p['id']['$t'],
-				's_type' => 'dswd'
-			));
-			$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
-			}
-		}}
-
-
-		$ret['dswd'] = $dswd;
-
-		$url = 'http://reliefboard.com/search?loc=1&name=1&message=1&query='.urldecode($bogart['searchString']).'&offset=0&limit=1000000000';
-		$response = file_get_contents($url);
-		if($response){
-		$json = stripslashes($response);
-		$array = json_decode($json, true);
-		if($array['data']['result_count'] > 0){
-		$data = $array['data']['result'];
-		foreach($data as $p){
-			$matches = array();
-
-			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['sender_number'], $matches);
-			if($matches[0])
-				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
-			array_push($relief, array(
-				'id' => $p['id'],
-				'place' => urldecode($p['place_tag']),
-				'sender' => urldecode($p['sender']),
-				'number' => $matches[0],
-				'message' => urldecode($p['message']),
-				'from' => $url,
-				's_type' => 'relief'
-			));
-		}}}
-		$ret['relief'] = $relief;
-
-		$url = 'http://api.bangonph.com/v1/posts';
-		$response = file_get_contents($url);
-		if($response){
-		$array = json_decode($response, TRUE);
-		$data = $array['data']['posts'];
-		foreach($data as $p){
-			if(preg_match(strtolower('/('.strtolower(str_ireplace(' ','|',$p['location'].' '.$p['name'].' '.$p['message'] )). ')/'), strtolower(urldecode($bogart['searchString']))))
-			if(strpos(strtolower($p['location'].$p['name'].$p['message']), strtolower($bogart['searchString']))) {
-			$matches = array();
-			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['phone'], $matches);
-			if(preg_match('/('.str_ireplace(" ","|",strtolower($p['location'].' '.$p['name'].' '.$p['message'])). ')/', $bogart['searchString']) && $matches[0])
-				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
-				array_push($bangon, array(
-					'id'	=> $p['id'],
-					'place' => $p['location'],
-					'sender' => $p['name'],
-					'number' => $matches[0],
-					'message' => $p['message'],
-					'from' => $url,
-					's_type' => 'bangon'
-				));
-			}
-		}}
-	
-		$ret['bangon'] = $bangon;
-
-		}
-		$rt = array_slice(array_merge($fb, $google,$dswd,$relief,$bangon), 0 ,3);
-
-	
-		$this->response(array('status'=>'Success','data'=>$res),200);
-
+		} // end of main looop
 
 	}
 
