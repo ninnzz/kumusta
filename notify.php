@@ -87,10 +87,7 @@ if($message) {
 				    $code
 				);
 
-				print_r($response);
-				echo $code;
-
-				if(!$response['error']) {
+				if(!isset($response['error']) {
 					$query = 'INSERT INTO donations VALUES(%s);';
 					$data = array('NULL', $user[0]);
 					$query = sprintf($query, implode(',', $data));
