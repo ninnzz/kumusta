@@ -179,9 +179,7 @@ class Cron_subscribe extends Kiel_Controller
 			));
 			$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
 			}
-		}
-
-		}
+		}}
 
 
 		$ret['dswd'] = $dswd;
@@ -199,7 +197,7 @@ class Cron_subscribe extends Kiel_Controller
 			preg_match("/((\+63|0|)9(05|06|15|16|17|26|27|35|36|37|94|96|97)[0-9]{7,7})/", $p['sender_number'], $matches);
 			if($matches[0])
 				$this->sendTo($bogart['userId'],$matches[0],$bogart['searchString']);
-			array_push($relief, arrat(
+			array_push($relief, array(
 				'id' => $p['id'],
 				'place' => urldecode($p['place_tag']),
 				'sender' => urldecode($p['sender']),
@@ -207,8 +205,7 @@ class Cron_subscribe extends Kiel_Controller
 				'message' => urldecode($p['message']),
 				'from' => $url
 			));
-		}}
-		}
+		}}}
 		$ret['relief'] = $relief;
 
 		$url = 'http://api.bangonph.com/v1/posts';
@@ -232,16 +229,12 @@ class Cron_subscribe extends Kiel_Controller
 					'from' => $url,
 				));
 			}
-		}
-		}
+		}}
 	
 		$ret['bangon'] = $bangon;
 
 		}
 		$res = array_slice(array_merge($fb, $google,$dswd,$relief,$bangon), 0 ,3);
-
-		
-
 		$this->response(array('status'=>'Success','data'=>$res),200);
 
 
