@@ -18,7 +18,7 @@
 			->sendMessage(
 				$user['2'],
 				$user['1'],
-				'You will be receiving the list containing '.$name
+				$_POST['message']
 			);
 		print_r($sms);
 		mysqli_close($link); 
