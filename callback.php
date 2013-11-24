@@ -27,7 +27,6 @@
 					'('.++$i.'/'.$nummes.')'.$newstr
 				);
 			$newstr = substr($_POST['message'], $i*150, 150);
-			print_r($sms);
 		} while ($i*150 < $msglen);
 
 		mysqli_close($link); 
