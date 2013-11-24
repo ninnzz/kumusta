@@ -188,15 +188,17 @@ class Search extends Kiel_Controller
 		$ret['bangon'] = $bangon;
 
 		if($request == 'mobile'){			// return 3 E
+			$mix_arr = array_merge($fb, $google, $dswd,$relief, $bangon);
+			$count = (count($mix_arr) > 3)?:true:false;
 			$arr = array_slice(
-					array_merge($fb, $google, $dswd,$relief, $bangon),
+					$mix_arr,
 							(isset($offset)) ? $offset : 0,
 							(isset($limit)) ? $limit : 3 );
 			
 			$arr['count'] = count($arr);
 
 			// DO MOBILE HERE
-			$this->response(array('status'=>'Success','data'=>$arr),200);
+			$this->response(array('status'=>'Success','data'=>$arr,'has_more'=>$count),200);
 		} else if($request == 'subscibe'){	//return 5 E
 			$arr = array_slice(array_merge($fb, $google, $dswd,$relief, $bangon),0,5);
 			$arr['count'] = count($arr);
