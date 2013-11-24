@@ -6,7 +6,8 @@ class Search extends Kiel_Controller
 		$this->required_fields($required,$this->get_args);
 		$request = $this->get_args['source'];
 		$searchString = $this->get_args['query'];
-
+		$offset= $this->get_args['offset'];
+		$limit = $this->get_args['limit'];
 		$ret = array();
 		$count=0;
 		$tmp = array();
@@ -187,7 +188,11 @@ class Search extends Kiel_Controller
 		$ret['bangon'] = $bangon;
 
 		if($request == 'mobile'){			// return 3 E
-			$arr = array_slice(array_merge($fb, $google, $dswd,$relief, $bangon),0,3);
+			$arr = array_slice(
+					array_merge($fb, $google, $dswd,$relief, $bangon),
+							(isset($offset)) ? $offset : 0,
+							(isset($limit)) ? $limit : 3 );
+			
 			$arr['count'] = count($arr);
 
 			// DO MOBILE HERE
