@@ -13,14 +13,26 @@
 		$link = mysqli_connect("localhost","root","P@ssw0rd","kumusta") or die("Error " . mysqli_error($link));
 		$result = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $_POST['phone_number']).'\' LIMIT 1;');
 		$user = $result->fetch_row();
-		$sms = $globe
-			->sms(7625)
-			->sendMessage(
-				$user['2'],
-				$user['1'],
-				$_POST['message']
-			);
-		print_r($sms);
+
+
+		$i = 0;
+		$msglen = strlen($_POST['message']);
+		$newstr = substr($_POST['message'], 0, 150);
+		do {
+
+			$sms = $globe
+				->sms(7625)
+				->sendMessage(
+					$user['2'],
+					$user['1'],
+					$newstr
+				);
+			$newstr = substr($_POST['message'], ++$i*150, 150);
+
+			echo $newstr."<br/>";
+
+		} while ($i*150 < $msglen);
+
 		mysqli_close($link); 
 	}
 
