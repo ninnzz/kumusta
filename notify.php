@@ -80,13 +80,15 @@ if($message) {
 					$user['1']
 				);
 
+				$code = '7625'.($donation[0]+1);
+
 				$response = $charge->charge(
 				    0,
-				    '7625'.$donation[0]+1
+				    $code;
 				);
 
 				print_r($response);
-				echo '7625'.$donation[0]+1;
+				echo $code;
 
 				if(!$response['error']) {
 					$query = 'INSERT INTO donations VALUES(%s);';
