@@ -286,6 +286,8 @@ class Cron_subscribe extends Kiel_Controller
 					$str .= " . . . . Masyadong madami ang resulta para sa hinahanap mo. Subukang pumunta sa http://pprmint.github.io/kumusta/ para kumpletong listahan ng hinahanap.";
 				}
 			}
+			print_r($str);
+			die();
 		
 			$url = "http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/callback.php";
 			$fields_string = "message={$str}&phone_number=".$bogart['phoneNumber'];
