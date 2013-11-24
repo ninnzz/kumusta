@@ -29,7 +29,6 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
-				preg_match('/LIMIT [0-9]+/', $name)
 				//if searching
 				$response = $sms->sendMessage(
 					$user['2'],
