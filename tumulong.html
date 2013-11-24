@@ -236,6 +236,7 @@
 			
 			function submitForm(f){
 				document.getElementById('submit_button').value = 'ISINUSUMITE';
+				document.getElementById('submit_button').disabled = 'disabled';
 				var url = "http://www.reliefboard.com/messages/feed/",
 					params = serialize(f),
 					http = new XMLHttpRequest();
@@ -251,6 +252,7 @@
 						f.message.value = "";
 						document.getElementById('form_div').style.display = 'none';
 						document.getElementById('submit_button').value = 'ISUMITE';
+						document.getElementById('submit_button').disabled = '';
 					}
 				}
 				

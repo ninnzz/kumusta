@@ -337,7 +337,7 @@
 							data.google.length && (res.innerHTML += "<br class='clearfix' /><h4>MGA RESULTA GALING SA GOOGLE</h4>");
 							for(i=0; i < data.google.length; i+=1){
 								if(data.google[i].message && data.google[i].message.length > 5){
-									res.innerHTML += "<div class='res ggl'><a target='_blank' href='"+data.google[i].from+"'>"+data.google[i].message.trim()+"</div>";
+									res.innerHTML += "<div class='res ggl'><a target='_blank' href='"+data.google[i].from+"'>"+data.google[i].sender+", "+data.google[i].message.trim()+"</div>";
 								}
 							}
 							
