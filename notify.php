@@ -68,7 +68,7 @@ if($message) {
 
 		        $str = "";
 		        foreach($data as $x) {
-		        	$str.=" ".$message;
+		        	$str.=" ".$x['message'];
 		        }
 
 		        echo $str;
