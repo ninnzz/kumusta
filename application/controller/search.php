@@ -198,7 +198,11 @@ class Search extends Kiel_Controller
 				$this->response(array('status'=>'Success', 'data'=>$arr), 200);
 			}
 
-			$arr = array_slice(array_merge($fb, $google, $dswd,$relief, $bangon),0,3);
+			
+			
+			$arr = array_slice( (isset($arr))?$arr:array_merge($fb, $google, $dswd,$relief, $bangon),0,3);
+			
+			
 			$arr['count'] = count($arr);
 
 			// DO MOBILE HERE
