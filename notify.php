@@ -29,6 +29,7 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'SEARCH') === 0) {
 				$name = split(" ", strtoupper($item['message']));
 				$name = implode(" ", array_splice($name, 1));
+				preg_match('/LIMIT [0-9]+/', $name)
 				//if searching
 				$response = $sms->sendMessage(
 					$user['2'],
@@ -36,6 +37,39 @@ if($message) {
 					'You will be receiving the list containing '.$name
 				);
 				//logic for pull here
+				preg_match('/LIMIT ([0-9]+)/', $name, $temp);
+				if(isset($temp[0])) {
+					$name = substr($name, strlen($temp[0]));
+					$limit = $temp[1];
+					preg_match('/OFFSET ([0-9]+)/', $name, $temp);
+					if(isset($temp[0])) {
+						$name = substr($name, strlen($temp[0]));
+						$offset = $temp[1];
+					}
+				}
+
+				$fields = array('query' => $name, 'source' => 'mobile', 'limit' => $limit, 'offset' => $offset);
+
+				array_filter($fields);
+
+				print_r($fields);
+
+
+
+		        // $ch = curl_init($url.'?'.$fields_string);
+		        // curl_setopt($ch, CURLOPT_HEADER, true);
+		        // curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		        //     'Accept: application/json'
+		        // ));
+
+		        // $response = curl_exec($ch);
+
+		        // $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+		        // list($header, $body) = explode("\r\n\r\n", $response, 2);
+
+		        // curl_close($ch);
 			}
 
 			if(strpos(strtoupper($item['message']), 'SUBSCRIBE SEARCH') === 0) {
@@ -45,7 +79,7 @@ if($message) {
 				$sms->sendMessage(
 					$user['2'],
 					$user['1'],
-					'You will be receiving the list containing your '.$name.' every <time interval here>'
+					'You will be receiving the list containing details about '.$name.' every 1 hour'
 				);
 				$query = 'INSERT INTO search VALUES(%s);';
 				$data = array('NULL', '\''.$user[0].'\'', '\''.$name.'\'', '\''.date('Y-m-d H:i:s').'\'','NULL');
