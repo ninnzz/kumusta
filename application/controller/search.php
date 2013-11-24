@@ -41,7 +41,7 @@ class Search extends Kiel_Controller
 					'place' => '',
 					'sender' => strstr($p['name'], 'Help', true) . ' & '.$name,
 					'number' => '',
-					'message' => strstr($p['name'], 'Help'),
+					'message' => strstr($p['name'], 'Help'). "\nFrom Facebook Graph",
 					'image' => $p['source'],
 					'from' => $p['link'],
 				));
@@ -73,7 +73,7 @@ class Search extends Kiel_Controller
 				'place' => "".$p['home_street'].' : '.$p['home_city']	.' : '. $p['home_state'],
 				'sender' => "".$p['full_name'] .' ' .$p['alternate_names'].' : '.$p['given_name'].$p['family_name'],
 				'number' => '',
-				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
+				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess)."From Google Person Finder",
 				'from' => "".$p['source_url'],
 			));	
 		}
@@ -96,7 +96,7 @@ class Search extends Kiel_Controller
 					'place' => '',
 					'sender' =>	$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t'],
 					'number' => '',
-					'message' => 'Survivor',
+					'message' => 'Survivor. From DSWD Data',
 					'from' => $p['id']['$t'],
 				));
 				$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
@@ -108,7 +108,7 @@ class Search extends Kiel_Controller
 				'place' => '',
 				'sender' =>	$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t'],
 				'number' => '',
-				'message' => 'Survivor',
+				'message' => 'Survivor. From DSWD Data',
 				'from' => $p['id']['$t'],
 			));
 			$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
@@ -120,7 +120,7 @@ class Search extends Kiel_Controller
 				'place' => '',
 				'sender' =>	$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t'],
 				'number' => '',
-				'message' => 'Survivor',
+				'message' => 'Survivor. From DSWD Data',
 				'from' => $p['id']['$t'],
 			));
 			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true;
@@ -132,7 +132,7 @@ class Search extends Kiel_Controller
 				'place' => '',
 				'sender' =>	$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t'],
 				'number' => '',
-				'message' => 'Survivor',
+				'message' => 'Survivor. From DSWD Data',
 				'from' => $p['id']['$t'],
 			));
 			$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
@@ -157,7 +157,7 @@ class Search extends Kiel_Controller
 				'place' => urldecode($p['place_tag']),
 				'sender' => urldecode($p['sender']),
 				'number' => $p['sender_number'],
-				'message' => urldecode($p['message']),
+				'message' => urldecode($p['message'])."\nFrom ReliefBoard.",
 				'from' => $url,
 			));
 		}}
@@ -177,7 +177,7 @@ class Search extends Kiel_Controller
 					'place' => $p['location'],
 					'sender' => $p['name'],
 					'number' => $p['phone'],
-					'message' => $p['message'],
+					'message' => $p['message']."\nFrom BangonPH",
 					'from' => $url,
 				));
 
