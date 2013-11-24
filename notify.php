@@ -71,6 +71,10 @@ if($message) {
 		        	$str.=$x['message']." | ";
 		        }
 
+		        if($str == " | ") {
+		        	$str = "Sorry, your search didn't match any results";
+		        }
+
 		        $str = urlencode($str);
 				$url = "http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/callback.php";
 				$fields_string = "message={$str}&phone_number=".$user['1'];
