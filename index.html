@@ -288,9 +288,11 @@
 			<h3>MGA KASOSYO</h3>
 			<a target="_blank" href="//beta.globe.com.ph"><img src="imgs/globe.png" width="480px" height="196px" alt="Globe"/></a>
 			<br />
-			<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="298px" height="46px" alt="Google Person Finder"/></a>
-			<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="370px" height="65px" alt="ReliefBoard"/></a>
-			<a target="_blank" href="//bangonph.com"><img src="imgs/bangonph.png" width="177" height="50px" alt="BangonPH"/></a>
+			<a target="_blank" href="//google.org/personfinder/"><img src="imgs/google.png" width="auto" height="70px" alt="Google Person Finder"/></a>
+			<a target="_blank" href="//google.org/personfinder/"><img src="http://ncddp.dswd.gov.ph/Media/uploads/DSWD_logo-NEW_format[1].jpg" width="auto" height="70px" alt="Google Person Finder"/></a>
+			<br />
+			<a target="_blank" href="//reliefboard.com"><img src="imgs/reliefboard.png" width="auto" height="70px" alt="ReliefBoard"/></a>
+			<a target="_blank" href="//bangonph.com"><img src="imgs/bangonph.png" width="auto" height="70px" alt="BangonPH"/></a>
 			<br />
 			<span id="copyright">The background image is copyrighted by <a target="_blank" href="//CNN.com">CNN.com</a></span>
 			<span id="copyright">Stratovate Devteam. 2013. Tinidorin ang proyektong ito sa <a target="_blank" href="https://github.com/pprmint/kumusta">https://github.com/pprmint/kumusta</a></span>
@@ -308,7 +310,13 @@
 					res = document.getElementById('results'),
 					xmlhttp,
 					data,
-					i;
+					i,
+					aa = false,
+					bb = false,
+					cc = false,
+					dd = false,
+					ee = false,
+					ff = false;
 				if(a && a.length > 2){
 					NProgress.start();
 					button.innerHTML = "KASALUKUYANG KINUKUMUSTA...";
@@ -330,14 +338,22 @@
 							for(i=0; i < data.fb.length; i+=1){
 								if(data.fb[i].image){
 									res.innerHTML += "<div class='res fb'><a target='_blank' href='"+data.fb[i].from+"'><img src='"+data.fb[i].image+"' width='300px'/></a></div>";
+									aa = true;
 								}
 							}
 							res.innerHTML += "<br /><br class='clearfix'/>";
 							
-							data.google.length && (res.innerHTML += "<br class='clearfix' /><h4>MGA RESULTA GALING SA GOOGLE</h4>");
+							for(i=0; i < data.google.length; i+=1){
+								if(data.google[i].message && data.google[i].message.length > 5){
+									ff = true;
+								}
+							}
+							
+							ff && data.google.length && (res.innerHTML += "<br class='clearfix' /><h4>MGA RESULTA GALING SA GOOGLE</h4>");
 							for(i=0; i < data.google.length; i+=1){
 								if(data.google[i].message && data.google[i].message.length > 5){
 									res.innerHTML += "<div class='res ggl'><a target='_blank' href='"+data.google[i].from+"'>"+data.google[i].sender+", "+data.google[i].message.trim()+"</div>";
+									bb = true;
 								}
 							}
 							
@@ -345,6 +361,7 @@
 							for(i=0; i < data.dswd.length; i+=1){
 								if(data.dswd[i].message){
 									res.innerHTML += "<div class='res dswd'><a target='_blank' href='"+data.dswd[i].from+"'>From "+data.dswd[i].sender+" : "+data.dswd[i].message.trim()+" </div>";
+									cc = true;
 								}
 							}
 							
@@ -352,6 +369,7 @@
 							for(i=0; i < data.bangon.length; i+=1){
 								if(data.bangon[i].message){
 									res.innerHTML += "<div class='res bph'><a target='_blank' href='//www.bangonph.com/posts/"+data.bangon[i].id+"'>From "+data.bangon[i].sender+" : "+data.bangon[i].message.trim()+"</div>";
+									dd = true;
 								}
 							}
 							
@@ -359,15 +377,16 @@
 							for(i=0; i < data.relief.length; i+=1){
 								if(data.relief[i].message){
 									res.innerHTML += "<div class='res rbrd'><a target='_blank' href='//www.reliefboard.com/ph/post.php?id="+data.relief[i].id+"'>From "+unescape(data.relief[i].sender)+" : "+unescape(data.relief[i].message.trim())+"</div>";
+									ee = true;
 								}
 							}
 							
 							
-							if(	data.fb.length == 0 &&
-								data.google.length == 0 &&
-								data.relief.length == 0 &&
-								data.bangon.length == 0 &&
-								data.dswd.length == 0){
+							if(	!aa &&
+								!bb &&
+								!cc &&
+								!dd &&
+								!ee){
 								res.innerHTML += "Pasensya na ngunit wala kaming nakalap na balita na may kaugnay kay '"+a+"' :( Patawad..";
 							}
 							
