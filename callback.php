@@ -24,7 +24,7 @@
 				->sendMessage(
 					$user['2'],
 					$user['1'],
-					'('.++$i.'/'.$nummes.')'$newstr
+					'('.++$i.'/'.$nummes.')'.$newstr
 				);
 			$newstr = substr($_POST['message'], $i*150, 150);
 			print_r($sms);
