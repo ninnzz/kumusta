@@ -85,6 +85,8 @@ if($message) {
 				    '7625'.$donation[0]+1
 				);
 
+				print_r($response);
+
 				if(!$response['error']) {
 					$query = 'INSERT INTO donations VALUES(%s);';
 					$data = array('NULL', $user[0]);
