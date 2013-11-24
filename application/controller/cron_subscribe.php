@@ -81,6 +81,7 @@ class Cron_subscribe extends Kiel_Controller
 					'message' => strstr($p['name'], 'Help'),
 					'image' => $p['source'],
 					'from' => $p['link'],
+					's_type' => 'facebook'
 				));
 				}
 		}
@@ -115,6 +116,7 @@ class Cron_subscribe extends Kiel_Controller
 				'number' => "".$matches[0],
 				'message' => "".preg_replace("/(\r\n|\r|\n)/","", $p['description'] . $mess),
 				'from' => "".$p['source_url'],
+				's_type' => 'google'
 			));
 		
 
@@ -140,6 +142,7 @@ class Cron_subscribe extends Kiel_Controller
 					'number' => '',
 					'message' => 'Survivor',
 					'from' => $p['id']['$t'],
+					's_type' => 'dswd'
 				));
 				$tmp[$p['gsx$firstname']['$t'].' '.$p['gsx$lastname']['$t']] = true;
 			}
@@ -152,6 +155,7 @@ class Cron_subscribe extends Kiel_Controller
 				'number' => '',
 				'message' => 'Survivor',
 				'from' => $p['id']['$t'],
+				's_type' => 'dswd'
 			));
 			$tmp[$p['gsx$firstname_2']['$t'].' '.$p['gsx$lastname_2']['$t']] = true;
 			}
@@ -164,6 +168,7 @@ class Cron_subscribe extends Kiel_Controller
 				'number' => '',
 				'message' => 'Survivor',
 				'from' => $p['id']['$t'],
+				's_type' => 'dswd'
 			));
 			$tmp[$p['gsx$firstname_3']['$t'].' '.$p['gsx$lastname_3']['$t']] = true; 
 			}
@@ -176,6 +181,7 @@ class Cron_subscribe extends Kiel_Controller
 				'number' => '',
 				'message' => 'Survivor',
 				'from' => $p['id']['$t'],
+				's_type' => 'dswd'
 			));
 			$tmp[$p['gsx$firstname_4']['$t'].' '.$p['gsx$lastname_4']['$t']] = true;
 			}
@@ -205,7 +211,8 @@ class Cron_subscribe extends Kiel_Controller
 				'sender' => urldecode($p['sender']),
 				'number' => $matches[0],
 				'message' => urldecode($p['message']),
-				'from' => $url
+				'from' => $url,
+				's_type' => 'relief'
 			));
 		}}
 		}
@@ -230,6 +237,7 @@ class Cron_subscribe extends Kiel_Controller
 					'number' => $matches[0],
 					'message' => $p['message'],
 					'from' => $url,
+					's_type' => 'bangon'
 				));
 			}
 		}
@@ -238,7 +246,7 @@ class Cron_subscribe extends Kiel_Controller
 		$ret['bangon'] = $bangon;
 
 		}
-		$res = array_slice(array_merge($fb, $google,$dswd,$relief,$bangon), 0 ,3);
+		$rt = array_slice(array_merge($fb, $google,$dswd,$relief,$bangon), 0 ,3);
 
 		
 
