@@ -251,7 +251,7 @@ class Cron_subscribe extends Kiel_Controller
 
 
 			if($count == 0){
-				$str .= " WALANG IMPORMASYON. Subukang pumunta sa http://pprmint.github.io/kumusta/ para sa karagdagang impormasyon."
+				$str .= " WALANG IMPORMASYON. Subukang pumunta sa http://pprmint.github.io/kumusta/ para sa karagdagang impormasyon.";
 			} else {
 
 				foreach ($rt as $r) {
