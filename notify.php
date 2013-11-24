@@ -80,19 +80,19 @@ if($message) {
 					$user['1']
 				);
 
+				$code = '7625'.($donation[0]+1);
+
 				$response = $charge->charge(
 				    0,
-				    $donation[0]+1
+				    $code
 				);
 
-				print_r($response);
-				echo $donation[0]+1;
-
-				$query = 'INSERT INTO donations VALUES(%s);';
-				$data = array('NULL', $user[0]);
-
-				$query = sprintf($query, implode(',', $data));
-				$response = $link->query($query);
+				if(!isset($response['error'])) {
+					$query = 'INSERT INTO donations VALUES(%s);';
+					$data = array('NULL', $user[0]);
+					$query = sprintf($query, implode(',', $data));
+					$response = $link->query($query);
+				}
 			}
 		}
 	}

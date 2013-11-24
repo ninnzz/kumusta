@@ -9,6 +9,18 @@
 	    'd8d9dc0d92941ff23b9b7f151f9162ec814afaaae31533d5ddda66c2c2587ee5'
 	);
 
+	if(isset($_POST['message']) && isset($_POST['phone_number'])) {
+		$result = $link->query('SELECT * FROM users WHERE phoneNumber = \''.str_replace('tel:+63', '', $_POST['phone_number']).'\' LIMIT 1;');
+		$user = $result->fetch_row();
+		$sms = $globe
+			->sms(7625)
+			->sendMessage(
+				$user['2'],
+				$user['1'],
+				'You will be receiving the list containing '.$name
+			);
+	}
+
 	if(isset($_REQUEST['code'])) {
 		$response = $auth->getAccessToken($_REQUEST['code']);
 	} else if(isset($_REQUEST['access_token'])) {
