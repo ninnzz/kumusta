@@ -56,7 +56,7 @@ if($message) {
 				);
 
 				$fields_string = http_build_query($fields);
-				$url = 'http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/search'
+				$url = 'http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/search';
 		        $ch = curl_init($url.'?'.$fields_string);
 		        curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
