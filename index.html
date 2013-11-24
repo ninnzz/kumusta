@@ -112,6 +112,7 @@
 				font-size: 12px;
 			}
 			#results{
+				color: #333;
 				width: 90%;
 				margin: 10px auto;
 			}
@@ -354,6 +355,15 @@
 								if(data.relief[i].message){
 									res.innerHTML += "<div class='res rbrd'><a target='_blank' href='//www.reliefboard.com/ph/post.php?id="+data.relief[i].id+"'>From "+unescape(data.relief[i].sender)+" : "+unescape(data.relief[i].message.trim())+"</div>";
 								}
+							}
+							
+							
+							if(	data.fb.length == 0 &&
+								data.google.length == 0 &&
+								data.relief.length == 0 &&
+								data.bangon.length == 0 &&
+								data.dswd.length == 0){
+								res.innerHTML += "Pasensya na ngunit wala kaming nakalap na balita na may kaugnay kay '"+a+"' :( Sorry..";
 							}
 							
 							NProgress.done();
