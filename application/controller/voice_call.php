@@ -46,6 +46,23 @@ class Voice_call extends Kiel_Controller
 			$tropo->say('Redirecting your call');
 			$num = $usr['result'][0]['phoneNumber'];
 			$tropo->transfer(array($num,"sip:21581001@sip.tropo.net"),array('from'=>'21587625','terminator'=>'*',"playvalue" => "http://www.phono.com/audio/holdmusic.mp3"));
+			
+			$message = "Thanks for using this service. We also accept donations (5pesos at most) :) You can donate if you want by sending DONATE to 21587625"
+			$url = "http://ec2-184-169-205-217.us-west-1.compute.amazonaws.com/callback.php";
+			$fields_string = "message={$message}&phone_number=".$num;
+
+			$ch = curl_init();
+
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch,CURLOPT_URL, $url);
+			curl_setopt($ch,CURLOPT_POST, 2);
+			curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+			//execute post
+			$result = curl_exec($ch);
+
+			//close connection
+			curl_close($ch);			
 		} else {
 			$tropo->say('Invalid Reference Code. Ending call now!');
 		}
