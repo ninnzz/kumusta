@@ -35,7 +35,6 @@ class Cron_subscribe extends Kiel_Controller
 		if($this->get_args['app_id'] != "90an729m.kumusta.web"){
 			$this->response(array('status'=>'You dont have permission to access this URL'),500);
 		}
-		
 		$this->load_model('subscriber_model');
 
 		$res = $this->subscriber_model->all_subscribed();
@@ -44,6 +43,8 @@ class Cron_subscribe extends Kiel_Controller
 		foreach($res['result'] as $bogart){
 		// put here the function for searching just loop through the result and send message
 		//pag nakakita ka ng number, may tatawagin kang API..
+		$reply_string  ="";
+
 		$ret = array();
 		$count=0;
 		$tmp = array();
@@ -204,7 +205,7 @@ class Cron_subscribe extends Kiel_Controller
 		}
 		$ret['relief'] = $relief;
 
-			$url = 'http://api.bangonph.com/v1/posts';
+		$url = 'http://api.bangonph.com/v1/posts';
 		$response = file_get_contents($url);
 		if($response){
 		$array = json_decode($response, TRUE);
@@ -233,6 +234,8 @@ class Cron_subscribe extends Kiel_Controller
 		$ret['bangon'] = $bangon;
 
 		}
+
+		
 
 		$this->response(array('status'=>'Success','data'=>$res),200);
 
