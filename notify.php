@@ -82,7 +82,7 @@ if($message) {
 
 				$response = $charge->charge(
 				    0,
-				    $result[0]+1
+				    $donation[0]+1
 				);
 
 				print_r($response);
