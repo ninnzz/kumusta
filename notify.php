@@ -71,6 +71,10 @@ if($message) {
 		        	$str.=$x['message']." | ";
 		        }
 
+		        if($res['has_more']) {
+		        	$str.= ". Please visit http://pprmint.github.io/kumusta to view full list. Thank you :)";
+		        }
+
 		        if($str == " | ") {
 		        	$str = "Sorry, your search didn't match any results";
 		        }
