@@ -208,7 +208,7 @@ class Cron_subscribe extends Kiel_Controller
 							'sender' => urldecode($p['sender']),
 							'number' => $matches[0],
 							'message' => urldecode($p['message']),
-							'from' => $url,
+							'from' => "http://reliefboard.com/messages/feed_item?message_id=".$p['id'],
 							's_type' => 'relief'
 						));
 					}
