@@ -74,7 +74,7 @@ if($message) {
 			if(strpos(strtoupper($item['message']), 'DONATE') === 0) {
 				$result = $link->query('SELECT * FROM donations ORDER BY id DESC LIMIT 1;');
 				$donation = $result->fetch_row();
-				$add = '1000001';
+				$add = '76251000001';
 				//if donating
 				$charge = $globe->payment(
 				    $user['2'],
