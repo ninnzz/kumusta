@@ -63,7 +63,15 @@ if($message) {
 		        $response = curl_exec($ch);
 		        curl_close($ch);
 
-		        print_r($response);
+		        $res = json_decode($response, true);
+		        $data = $res['data'];
+
+		        $str = "";
+		        foreach($data as $x) {
+		        	$str.=" ".$message;
+		        }
+
+		        echo $str;
 			}
 
 			if(strpos(strtoupper($item['message']), 'SUBSCRIBE SEARCH') === 0) {
