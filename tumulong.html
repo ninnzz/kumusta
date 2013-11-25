@@ -183,7 +183,7 @@
 				<textarea name="message"></textarea>
 				<input type="text" name="address" placeholder="Lokasyon" required="required"/>
 				<input type="text" name="user_number" placeholder="Contact Number" required="required"/>
-				<input type="submit" value="ISUMITE" id="submit_button"/>
+				<input type="submit" value="ISUMITE" id="submit_button" disabled="disabled"/>
 			</form>
 		</div>
 		<section id="top">
@@ -235,6 +235,8 @@
 			}
 			
 			function submitForm(f){
+				document.getElementById('form_div').style.display = 'none';
+				return false;
 				document.getElementById('submit_button').value = 'ISINUSUMITE';
 				document.getElementById('submit_button').disabled = 'disabled';
 				var url = "http://www.reliefboard.com/messages/feed/",
