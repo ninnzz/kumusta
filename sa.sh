@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-php -f send_alerts.php
+php -f ./application/controller/cron_subscribe.php
